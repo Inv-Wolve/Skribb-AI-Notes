@@ -27,7 +27,7 @@ Skribb AI is a note transformation platform that combines OCR capabilities, AI-p
 ```bash
 git clone <repository_url>
 cd skribb-ai
+```
 
 
-
-- **PLEASE NOTE, SKRIBB AI IS NOT COMPLETED. IT IS IN BETA PHASE, SO NOT ALL FEATURES WILL WORK AS EXPECTED. (Feel free to open issues)**
+**PLEASE NOTE, SKRIBB AI IS NOT COMPLETED. IT IS IN BETA PHASE, SO NOT ALL FEATURES WILL WORK AS EXPECTED. (Feel free to open issues)**
