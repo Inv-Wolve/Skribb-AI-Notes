@@ -1,0 +1,27 @@
+Training Data Preparation Report
+Generated: 2025-09-16 19:15:55
+
+Summary:
+- Total approved samples: 1
+- Successfully processed: 1
+- Skipped samples: 0
+- Success rate: 100.0%
+
+Output Directory: C:\Users\USER\Github\Scrib.v\Handwriting-OCR\train_data
+Files Generated:
+- train.txt: 1 samples
+- val.txt: 1 samples
+- preparation_report.txt: This report
+
+
+Next Steps:
+1. Review the generated train.txt and val.txt files
+2. Run monitor.py to check training readiness
+3. Follow PaddleOCR training documentation
+4. Use the prepared data for fine-tuning your model
+
+Training Command Example:
+python -m paddle.distributed.launch --gpus '0' tools/train.py -c configs/rec/rec_icdar15_train.yml
+
+Monitor training progress:
+python monitor.py

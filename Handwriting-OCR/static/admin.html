@@ -1,0 +1,1363 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skribb.AI - Admin Dashboard</title>
+<style>
+  :root {
+    --primary-color: #6366f1;
+    --primary-hover: #5855eb;
+    --primary-light: #a5b4fc;
+    --secondary-color: #f8fafc;
+    --accent-color: #10b981;
+    --accent-hover: #059669;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --border-color: #e2e8f0;
+    --border-hover: #cbd5e1;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --error-color: #dc2626;
+    --background-color: #f1f5f9;
+    --card-background: #ffffff;
+    --card-gradient: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--background-color) 0%, #e2e8f0 100%);
+    background-attachment: fixed;
+    margin: 0;
+    padding: var(--spacing-xl);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .admin-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+  }
+
+  .admin-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+  }
+
+  .admin-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: 2px;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    margin: 0;
+    font-weight: 500;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .auth-section {
+    margin-bottom: var(--spacing-2xl);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .auth-card {
+    background: var(--card-gradient);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .auth-card label {
+    display: block;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .auth-card label::before {
+    content: '🔐';
+    font-size: 1.2rem;
+  }
+
+  .token-input-group {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: stretch;
+  }
+
+  #token {
+    flex: 1;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: white;
+    font-weight: 500;
+  }
+
+  #token:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .load-btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .load-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .load-btn:hover {
+    background: linear-gradient(135deg, var(--primary-hover), #4338ca);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .load-btn:hover::before {
+    left: 100%;
+  }
+
+  .load-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    background: var(--text-muted);
+  }
+
+  /* Tab Navigation */
+  .tab-navigation {
+    display: flex;
+    background: var(--card-gradient);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    position: relative;
+  }
+
+  .tab-btn:hover {
+    color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.08);
+  }
+
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tab-content {
+    display: none;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Stats Dashboard */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .stat-card {
+    background: var(--card-gradient);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: var(--spacing-sm) 0 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    margin: var(--spacing-lg) 0;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  /* Upload List */
+  .uploads-container {
+    display: grid;
+    gap: var(--spacing-xl);
+  }
+
+  .row {
+    background: var(--card-gradient);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: 220px 1fr 380px;
+    gap: var(--spacing-xl);
+    align-items: start;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .row:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .upload-image {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+  }
+
+  .upload-image:hover {
+    transform: scale(1.05);
+  }
+
+  .upload-image img {
+    width: 100%;
+    height: auto;
+    border: none;
+    max-height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    display: block;
+  }
+
+  .upload-image::after {
+    content: '🔍';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: var(--spacing-sm);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 1.2rem;
+    pointer-events: none;
+  }
+
+  .upload-image:hover::after {
+    opacity: 1;
+  }
+
+  .upload-meta {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .upload-meta .meta-item {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  .upload-meta .meta-label {
+    font-weight: 700;
+    color: var(--text-primary);
+    min-width: 90px;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .upload-meta .meta-value {
+    color: var(--text-secondary);
+    word-break: break-word;
+    font-weight: 500;
+    background: var(--secondary-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.025em;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .status-pending {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    border: 1px solid #f59e0b;
+  }
+
+  .status-approved {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .status-rejected {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .upload-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .correction-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .correction-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .correction-group label::before {
+    content: '✏️';
+    font-size: 1rem;
+  }
+
+  .correction-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: white;
+    font-weight: 500;
+  }
+
+  .correction-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .control-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn-approve {
+    background: linear-gradient(135deg, var(--success-color), var(--accent-hover));
+    color: white;
+    border: 1px solid var(--success-color);
+  }
+
+  .btn-approve:hover {
+    background: linear-gradient(135deg, var(--accent-hover), #047857);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-reject {
+    background: linear-gradient(135deg, var(--warning-color), #f59e0b);
+    color: white;
+    border: 1px solid var(--warning-color);
+  }
+
+  .btn-reject:hover {
+    background: linear-gradient(135deg, #f59e0b, #b45309);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-delete {
+    background: linear-gradient(135deg, var(--error-color), #b91c1c);
+    color: white;
+    border: 1px solid var(--error-color);
+  }
+
+  .btn-delete:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--text-muted), #64748b);
+    color: white;
+    border: 1px solid var(--text-muted);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, #64748b, #475569);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    color: var(--text-secondary);
+    background: var(--card-gradient);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+  }
+
+  .empty-state svg {
+    margin: 0 auto var(--spacing-md);
+    opacity: 0.5;
+  }
+
+  .empty-state h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+    margin: 0;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* Training Section */
+  .training-section {
+    background: var(--card-gradient);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .training-section h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-lg) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .training-section h3::before {
+    content: '🚀';
+    font-size: 1.2rem;
+  }
+
+  .training-commands {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    border: 1px solid #334155;
+    position: relative;
+  }
+
+  .training-commands::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  /* Loading state improvements */
+  .loading {
+    pointer-events: none;
+  }
+
+  .loading .uploads-container {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 1024px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+    
+    .upload-image {
+      justify-self: center;
+      max-width: 300px;
+    }
+    
+    .upload-controls {
+      order: -1;
+    }
+
+    .tab-navigation {
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      flex: none;
+      min-width: 120px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: var(--spacing-md);
+    }
+    
+    .token-input-group {
+      flex-direction: column;
+    }
+    
+    .load-btn {
+      justify-content: center;
+      padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .auth-card {
+      padding: var(--spacing-lg);
+    }
+    
+    .row {
+      padding: var(--spacing-lg);
+    }
+    
+    .admin-header h2 {
+      font-size: clamp(1.75rem, 6vw, 2.5rem);
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: var(--spacing-sm);
+    }
+    
+    .auth-card, .row, .training-section {
+      padding: var(--spacing-md);
+      margin: 0 var(--spacing-xs);
+    }
+    
+    .admin-header {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .uploads-container {
+      gap: var(--spacing-lg);
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    html {
+      scroll-behavior: auto;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="admin-container">
+  <header class="admin-header">
+    <h2>Admin Dashboard</h2>
+    <p class="subtitle">Manage handwriting uploads and training data</p>
+  </header>
+  
+  <div class="auth-section">
+    <div class="auth-card">
+      <label>Admin Authentication</label>
+      <div class="token-input-group">
+        <input id="token" type="password" placeholder="Enter admin token">
+        <button onclick="loadData()" class="load-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23,4 23,10 17,10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          Load Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboard" style="display: none;">
+    <nav class="tab-navigation">
+      <button class="tab-btn active" onclick="switchTab('overview')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Overview
+      </button>
+      <button class="tab-btn" onclick="switchTab('uploads')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21,15 16,10 5,21"/>
+        </svg>
+        Review Uploads
+      </button>
+      <button class="tab-btn" onclick="switchTab('training')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+        </svg>
+        Training
+      </button>
+      <button class="tab-btn" onclick="switchTab('analytics')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+        </svg>
+        Analytics
+      </button>
+    </nav>
+
+    <!-- Overview Tab -->
+    <div id="overview-tab" class="tab-content active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="total-uploads">0</div>
+          <div class="stat-label">Total Uploads</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="pending-uploads">0</div>
+          <div class="stat-label">Pending Review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="approved-uploads">0</div>
+          <div class="stat-label">Approved</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="rejected-uploads">0</div>
+          <div class="stat-label">Rejected</div>
+        </div>
+      </div>
+
+      <div class="training-section">
+        <h3>Training Progress</h3>
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>Training Data Collection</span>
+            <span id="progress-text">0 / 100 samples</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+        <p style="color: var(--text-secondary); margin: var(--spacing-md) 0 0 0;">
+          Minimum 100 approved samples recommended for effective training.
+        </p>
+      </div>
+    </div>
+
+    <!-- Uploads Tab -->
+    <div id="uploads-tab" class="tab-content">
+      <div id="list" class="uploads-container"></div>
+    </div>
+
+    <!-- Training Tab -->
+    <div id="training-tab" class="tab-content">
+      <div class="training-section">
+        <h3>Prepare Training Data</h3>
+        <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">
+          Once you have enough approved samples, prepare the training data and start model training.
+        </p>
+        
+        <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); flex-wrap: wrap;">
+          <button onclick="prepareTrainingData()" class="btn btn-approve">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+            Prepare Training Data
+          </button>
+          <button onclick="runMonitoring()" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+            </svg>
+            Run Dataset Analysis
+          </button>
+        </div>
+
+        <h4 style="color: var(--text-primary); margin: var(--spacing-xl) 0 var(--spacing-md) 0;">Training Commands</h4>
+        <div class="training-commands" style="position: relative;">
+          <button class="copy-btn" onclick="copyToClipboard('training-cmd')">Copy</button>
+# 1. Prepare training data
+python train.py
+
+# 2. Run dataset monitoring
+python monitor.py
+
+# 3. Train PaddleOCR model (example)
+python -m paddle.distributed.launch --gpus '0' tools/train.py -c configs/rec/rec_icdar15_train.yml
+        </div>
+      </div>
+
+      <div class="training-section">
+        <h3>Training Status</h3>
+        <div id="training-status">
+          <p style="color: var(--text-secondary);">Training status will appear here when training is active.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Tab -->
+    <div id="analytics-tab" class="tab-content">
+      <div class="training-section">
+        <h3>Dataset Analytics</h3>
+        <div id="analytics-content">
+          <p style="color: var(--text-secondary);">Analytics data will be loaded here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentToken = '';
+let uploadsData = [];
+
+async function loadData() {
+  const token = document.getElementById("token").value;
+  if (!token) {
+    alert("Enter admin token in box at top.");
+    return;
+  }
+  
+  currentToken = token;
+  
+  // Add loading class to body
+  document.body.classList.add('loading');
+  
+  // Show loading state
+  const button = document.querySelector('.load-btn');
+  const originalHTML = button.innerHTML;
+  button.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-spin">
+      <path d="M21 12a9 9 0 11-6.219-8.56"/>
+    </svg>
+    Loading...
+  `;
+  button.disabled = true;
+  
+  try {
+    // Load uploads data
+    const res = await fetch("http://localhost:1234/admin/uploads", { 
+      headers: { "x-admin-token": token }
+    });
+    
+    if (!res.ok) {
+      alert("Failed to load. Check token.");
+      return;
+    }
+    
+    uploadsData = await res.json();
+    
+    // Show dashboard
+    document.getElementById("dashboard").style.display = "block";
+    
+    // Update overview stats
+    updateOverviewStats();
+    
+    // Load uploads in the uploads tab
+    loadUploads();
+    
+    // Load analytics
+    loadAnalytics();
+    
+  } catch (error) {
+    alert("Error loading data: " + error.message);
+  } finally {
+    // Reset button
+    button.innerHTML = originalHTML;
+    button.disabled = false;
+    document.body.classList.remove('loading');
+  }
+}
+
+function updateOverviewStats() {
+  const stats = {
+    total: uploadsData.length,
+    pending: uploadsData.filter(u => u.status === 'pending').length,
+    approved: uploadsData.filter(u => u.status === 'approved').length,
+    rejected: uploadsData.filter(u => u.status === 'rejected').length
+  };
+  
+  document.getElementById('total-uploads').textContent = stats.total;
+  document.getElementById('pending-uploads').textContent = stats.pending;
+  document.getElementById('approved-uploads').textContent = stats.approved;
+  document.getElementById('rejected-uploads').textContent = stats.rejected;
+  
+  // Update progress bar
+  const progressPercent = Math.min((stats.approved / 100) * 100, 100);
+  document.getElementById('progress-fill').style.width = progressPercent + '%';
+  document.getElementById('progress-text').textContent = `${stats.approved} / 100 samples`;
+}
+
+function loadUploads() {
+  const container = document.getElementById("list");
+  
+  if (uploadsData.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21,15 16,10 5,21"/>
+        </svg>
+        <h3>No uploads found</h3>
+        <p>No handwriting samples have been uploaded yet.</p>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = "";
+  
+  for (const item of uploadsData) {
+    const div = document.createElement("div");
+    div.className = "row";
+    
+    const imageDiv = document.createElement("div");
+    imageDiv.className = "upload-image";
+    const img = document.createElement("img");
+    img.src = "/images/" + item.file;
+    img.alt = "Handwriting sample";
+    img.onclick = () => window.open(img.src, '_blank');
+    imageDiv.appendChild(img);
+    
+    const meta = document.createElement("div");
+    meta.className = "upload-meta";
+    
+    const statusClass = `status-${item.status || 'pending'}`;
+    meta.innerHTML = `
+      <div class="meta-item">
+        <span class="meta-label">ID:</span>
+        <span class="meta-value">${item.id}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">File:</span>
+        <span class="meta-value">${item.orig_name}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status:</span>
+        <span class="status-badge ${statusClass}">${item.status || 'pending'}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Predicted:</span>
+        <span class="meta-value">${item.predicted_text || 'Not analyzed'}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Provided:</span>
+        <span class="meta-value">${item.provided_text || 'None provided'}</span>
+      </div>
+    `;
+    
+    const controls = document.createElement("div");
+    controls.className = "upload-controls";
+    controls.innerHTML = `
+      <div class="correction-group">
+        <label>Corrected text (for training):</label>
+        <textarea id="ct_${item.id}" class="correction-textarea" placeholder="Enter the correct transcription...">${item.corrected_text || ""}</textarea>
+      </div>
+      <div class="control-buttons">
+        <button onclick="approve('${item.id}')" class="btn btn-approve">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"></polyline>
+          </svg>
+          Approve
+        </button>
+        <button onclick="reject('${item.id}')" class="btn btn-reject">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          Reject
+        </button>
+        <button onclick="deleteUpload('${item.id}')" class="btn btn-delete">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3,6 5,6 21,6"></polyline>
+            <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2"></path>
+          </svg>
+          Delete
+        </button>
+      </div>
+    `;
+    
+    div.appendChild(imageDiv);
+    div.appendChild(meta);
+    div.appendChild(controls);
+    container.appendChild(div);
+  }
+}
+
+function loadAnalytics() {
+  const container = document.getElementById("analytics-content");
+  
+  if (uploadsData.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-secondary);">No data available for analysis.</p>';
+    return;
+  }
+  
+  // Calculate analytics
+  const textLengths = uploadsData
+    .map(u => u.corrected_text || u.provided_text || u.predicted_text || '')
+    .filter(t => t.length > 0)
+    .map(t => t.length);
+  
+  const avgTextLength = textLengths.length > 0 ? 
+    Math.round(textLengths.reduce((a, b) => a + b, 0) / textLengths.length) : 0;
+  
+  const totalFileSize = uploadsData.reduce((sum, u) => sum + (u.file_size || 0), 0);
+  const avgFileSize = uploadsData.length > 0 ? 
+    Math.round(totalFileSize / uploadsData.length / 1024) : 0; // KB
+  
+  container.innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">${avgTextLength}</div>
+        <div class="stat-label">Avg Text Length</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">${avgFileSize}KB</div>
+        <div class="stat-label">Avg File Size</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">${Math.round(totalFileSize / 1024 / 1024)}MB</div>
+        <div class="stat-label">Total Dataset Size</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">${uploadsData.filter(u => u.predicted_text).length}</div>
+        <div class="stat-label">OCR Processed</div>
+      </div>
+    </div>
+  `;
+}
+
+function switchTab(tabName) {
+  // Update tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  // Update tab content
+  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+  document.getElementById(tabName + '-tab').classList.add('active');
+}
+
+async function approve(id) {
+  const corrected = document.getElementById("ct_" + id).value.trim();
+  
+  if (!corrected) {
+    alert("Please enter corrected text before approving.");
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append("upload_id", id);
+  formData.append("corrected_text", corrected);
+  
+  try {
+    const res = await fetch("http://localhost:1234/admin/approve", { 
+      method: "POST", 
+      body: formData, 
+      headers: { "x-admin-token": currentToken }
+    });
+    
+    if (res.ok) { 
+      alert("Approved successfully!"); 
+      loadData(); // Reload all data
+    } else {
+      const error = await res.json();
+      alert("Failed to approve: " + (error.detail || "Unknown error"));
+    }
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+}
+
+async function reject(id) {
+  const reason = prompt("Reason for rejection (optional):");
+  
+  const formData = new FormData();
+  formData.append("upload_id", id);
+  formData.append("reason", reason || "");
+  
+  try {
+    const res = await fetch("http://localhost:1234/admin/reject", { 
+      method: "POST", 
+      body: formData, 
+      headers: { "x-admin-token": currentToken }
+    });
+    
+    if (res.ok) { 
+      alert("Rejected successfully!"); 
+      loadData(); // Reload all data
+    } else {
+      const error = await res.json();
+      alert("Failed to reject: " + (error.detail || "Unknown error"));
+    }
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+}
+
+async function deleteUpload(id) {
+  if (!confirm("Delete this upload permanently? This action cannot be undone.")) return;
+  
+  try {
+    const res = await fetch("http://localhost:1234/admin/delete/" + id, { 
+      method: "DELETE", 
+      headers: { "x-admin-token": currentToken }
+    });
+    
+    if (res.ok) { 
+      alert("Deleted successfully!"); 
+      loadData(); // Reload all data
+    } else {
+      const error = await res.json();
+      alert("Failed to delete: " + (error.detail || "Unknown error"));
+    }
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+}
+
+async function prepareTrainingData() {
+  alert("This would run: python train.py\n\nPlease run this command in your terminal to prepare training data.");
+}
+
+async function runMonitoring() {
+  alert("This would run: python monitor.py\n\nPlease run this command in your terminal to analyze your dataset.");
+}
+
+function copyToClipboard(elementId) {
+  const element = document.querySelector('.training-commands');
+  const text = element.textContent.trim();
+  
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    const originalText = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 2000);
+  }).catch(() => {
+    alert('Failed to copy to clipboard');
+  });
+}
+</script>
+<script id="dhws-dataInjector" src="../../public/dhws-data-injector.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+2025-09-16 19:15:54,993 - INFO - Starting training data preparation...
+2025-09-16 19:15:55,009 - INFO - Loaded 1 labels from C:\Users\USER\Github\Scrib.v\Handwriting-OCR\data\labels.json
+2025-09-16 19:15:55,026 - INFO - Created training file: C:\Users\USER\Github\Scrib.v\Handwriting-OCR\train_data\train.txt
+2025-09-16 19:15:55,027 - INFO - Created validation file: C:\Users\USER\Github\Scrib.v\Handwriting-OCR\train_data\val.txt
+2025-09-16 19:15:55,031 - INFO - Generated preparation report: C:\Users\USER\Github\Scrib.v\Handwriting-OCR\train_data\preparation_report.txt
+2025-09-16 19:15:55,032 - INFO - Training data preparation completed!
+2025-09-16 19:15:55,033 - INFO - Successfully prepared 1/1 approved samples
+2025-09-16 19:15:55,033 - INFO - Training data available in: C:\Users\USER\Github\Scrib.v\Handwriting-OCR\train_data

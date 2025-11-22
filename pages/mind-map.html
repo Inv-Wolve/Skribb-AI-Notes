@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skribb AI - Mind Map</title>
+    <meta name="description" content="Create and organize your ideas with Skribb AI's interactive mind mapping tool." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <style>
+        .mind-map-container {
+            height: calc(100vh - 80px);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 1rem;
+            margin: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mind-map-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+            background-image: 
+                radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .mind-map-canvas:active {
+            cursor: grabbing;
+        }
+        
+        .node {
+            position: absolute;
+            background: white;
+            border: 2px solid var(--color-primary);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            min-width: 120px;
+            max-width: 200px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: move;
+            transition: all 0.3s ease;
+            z-index: 10;
+            word-wrap: break-word;
+            font-weight: 500;
+        }
+        
+        .node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .node.selected {
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        
+        .node.root {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+        }
+        
+        .node.child {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border-color: var(--color-accent);
+        }
+        
+        .node-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+            text-align: center;
+        }
+        
+        .connection {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .connection-line {
+            stroke: var(--color-primary);
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.7;
+        }
+        
+        .toolbar {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .toolbar-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .toolbar-btn {
+            padding: 0.5rem 1rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .toolbar-btn:hover {
+            background: var(--color-primary-700);
+            transform: translateY(-1px);
+        }
+        
+        .toolbar-btn.secondary {
+            background: var(--color-text-muted);
+        }
+        
+        .toolbar-btn.secondary:hover {
+            background: var(--color-text-secondary);
+        }
+        
+        .toolbar-btn.danger {
+            background: var(--color-error);
+        }
+        
+        .toolbar-btn.danger:hover {
+            background: #b91c1c;
+        }
+        
+        .save-status {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .save-status.saving {
+            color: var(--color-warning);
+        }
+        
+        .save-status.saved {
+            color: var(--color-success);
+        }
+        
+        .save-status.error {
+            color: var(--color-error);
+        }
+        
+        .context-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 30;
+            min-width: 150px;
+            display: none;
+        }
+        
+        .context-menu-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .context-menu-item:hover {
+            background: var(--color-primary-50);
+        }
+        
+        .context-menu-item.danger:hover {
+            background: #fee2e2;
+            color: var(--color-error);
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            backdrop-filter: blur(2px);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--color-border);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .toolbar-group {
+                justify-content: center;
+            }
+            
+            .mind-map-container {
+                margin: 0.5rem;
+                height: calc(100vh - 60px);
+            }
+        }
+    </style>
+    <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fskribbai9526back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background text-text-primary" data-requires-auth="true">
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-blur-sm border-b border-border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#gradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0066FF"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <span class="text-xl font-outfit font-bold text-gradient-primary">Skribb AI</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="Homepage.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Home</a>
+                        <a href="Dashboard.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Dashboard</a>
+                        <a href="features-hub.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Features</a>
+                        <a href="Mind-Map.html" class="text-primary font-medium px-3 py-2 rounded-md text-sm">Mind Map</a>
+                        <button onclick="window.authManager.logout()" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Logout</button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button class="text-text-secondary hover:text-primary transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mind Map Container -->
+    <div class="mind-map-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button class="toolbar-btn" onclick="mindMap.addNode()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    Add Node
+                </button>
+                <button class="toolbar-btn secondary" onclick="mindMap.deleteSelected()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <polyline points="3,6 5,6 21,6"/>
+                        <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2"/>
+                    </svg>
+                    Delete
+                </button>
+                <button class="toolbar-btn secondary" onclick="mindMap.clearAll()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 6h18l-1.5 14H4.5L3 6z"/>
+                        <path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                    </svg>
+                    Clear All
+                </button>
+            </div>
+            
+            <div class="toolbar-group">
+                <div class="save-status" id="saveStatus">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
+                        <polyline points="17,21 17,13 7,13 7,21"/>
+                        <polyline points="7,3 7,8 15,8"/>
+                    </svg>
+                    <span>Auto-saved</span>
+                </div>
+                <button class="toolbar-btn" onclick="mindMap.save()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
+                        <polyline points="17,21 17,13 7,13 7,21"/>
+                        <polyline points="7,3 7,8 15,8"/>
+                    </svg>
+                    Save
+                </button>
+            </div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="mind-map-canvas" id="canvas">
+            <svg id="connections" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+            </svg>
+        </div>
+
+        <!-- Context Menu -->
+        <div class="context-menu" id="contextMenu">
+            <div class="context-menu-item" onclick="mindMap.addChildNode()">Add Child Node</div>
+            <div class="context-menu-item" onclick="mindMap.editNode()">Edit Node</div>
+            <div class="context-menu-item danger" onclick="mindMap.deleteNode()">Delete Node</div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/auth.js"></script>
+    <script>
+        class MindMap {
+            constructor() {
+                this.nodes = new Map();
+                this.connections = [];
+                this.selectedNode = null;
+                this.draggedNode = null;
+                this.dragOffset = { x: 0, y: 0 };
+                this.canvas = document.getElementById('canvas');
+                this.contextMenu = document.getElementById('contextMenu');
+                this.saveStatus = document.getElementById('saveStatus');
+                this.autoSaveInterval = null;
+                this.isDirty = false;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.load();
+                this.startAutoSave();
+                
+                // Create initial root node if no data exists
+                if (this.nodes.size === 0) {
+                    this.createRootNode();
+                }
+            }
+            
+            setupEventListeners() {
+                // Canvas events
+                this.canvas.addEventListener('click', (e) => this.handleCanvasClick(e));
+                this.canvas.addEventListener('contextmenu', (e) => this.handleContextMenu(e));
+                this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+                this.canvas.addEventListener('mouseup', (e) => this.handleMouseUp(e));
+                
+                // Global events
+                document.addEventListener('click', (e) => this.hideContextMenu(e));
+                document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+                
+                // Prevent default drag behavior
+                this.canvas.addEventListener('dragstart', (e) => e.preventDefault());
+            }
+            
+            createRootNode() {
+                const node = this.createNode('My Mind Map', 400, 300, 'root');
+                this.nodes.set(node.id, node);
+                this.renderNode(node);
+                this.markDirty();
+            }
+            
+            createNode(text = 'New Node', x = 100, y = 100, type = 'child') {
+                const id = 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                return {
+                    id,
+                    text,
+                    x,
+                    y,
+                    type,
+                    parentId: null,
+                    children: []
+                };
+            }
+            
+            renderNode(node) {
+                const nodeElement = document.createElement('div');
+                nodeElement.className = `node ${node.type}`;
+                nodeElement.id = node.id;
+                nodeElement.style.left = node.x + 'px';
+                nodeElement.style.top = node.y + 'px';
+                
+                const input = document.createElement('input');
+                input.className = 'node-input';
+                input.type = 'text';
+                input.value = node.text;
+                input.addEventListener('input', (e) => this.updateNodeText(node.id, e.target.value));
+                input.addEventListener('blur', () => this.save());
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur();
+                    }
+                });
+                
+                nodeElement.appendChild(input);
+                this.canvas.appendChild(nodeElement);
+                
+                // Make node draggable
+                nodeElement.addEventListener('mousedown', (e) => this.startDrag(e, node));
+            }
+            
+            addNode() {
+                const canvas = this.canvas.getBoundingClientRect();
+                const x = Math.random() * (canvas.width - 200) + 100;
+                const y = Math.random() * (canvas.height - 100) + 100;
+                
+                const node = this.createNode('New Node', x, y);
+                this.nodes.set(node.id, node);
+                this.renderNode(node);
+                this.markDirty();
+                
+                // Focus the new node for immediate editing
+                setTimeout(() => {
+                    const nodeElement = document.getElementById(node.id);
+                    const input = nodeElement.querySelector('.node-input');
+                    input.focus();
+                    input.select();
+                }, 100);
+            }
+            
+            addChildNode() {
+                if (!this.selectedNode) return;
+                
+                const parent = this.nodes.get(this.selectedNode);
+                if (!parent) return;
+                
+                // Position child node relative to parent
+                const angle = (parent.children.length * 60) * (Math.PI / 180);
+                const distance = 150;
+                const x = parent.x + Math.cos(angle) * distance;
+                const y = parent.y + Math.sin(angle) * distance;
+                
+                const child = this.createNode('Child Node', x, y);
+                child.parentId = parent.id;
+                parent.children.push(child.id);
+                
+                this.nodes.set(child.id, child);
+                this.renderNode(child);
+                this.updateConnections();
+                this.markDirty();
+                
+                // Focus the new child node
+                setTimeout(() => {
+                    const nodeElement = document.getElementById(child.id);
+                    const input = nodeElement.querySelector('.node-input');
+                    input.focus();
+                    input.select();
+                }, 100);
+            }
+            
+            deleteSelected() {
+                if (this.selectedNode) {
+                    this.deleteNodeById(this.selectedNode);
+                }
+            }
+            
+            deleteNode() {
+                if (this.selectedNode) {
+                    this.deleteNodeById(this.selectedNode);
+                }
+                this.hideContextMenu();
+            }
+            
+            deleteNodeById(nodeId) {
+                const node = this.nodes.get(nodeId);
+                if (!node) return;
+                
+                // Don't delete root node if it's the only one
+                if (node.type === 'root' && this.nodes.size === 1) {
+                    alert('Cannot delete the root node when it\'s the only node.');
+                    return;
+                }
+                
+                // Remove from parent's children
+                if (node.parentId) {
+                    const parent = this.nodes.get(node.parentId);
+                    if (parent) {
+                        parent.children = parent.children.filter(id => id !== nodeId);
+                    }
+                }
+                
+                // Delete all children recursively
+                node.children.forEach(childId => this.deleteNodeById(childId));
+                
+                // Remove from DOM
+                const nodeElement = document.getElementById(nodeId);
+                if (nodeElement) {
+                    nodeElement.remove();
+                }
+                
+                // Remove from nodes map
+                this.nodes.delete(nodeId);
+                
+                // Clear selection if this was the selected node
+                if (this.selectedNode === nodeId) {
+                    this.selectedNode = null;
+                }
+                
+                this.updateConnections();
+                this.markDirty();
+            }
+            
+            clearAll() {
+                if (confirm('Are you sure you want to clear all nodes? This action cannot be undone.')) {
+                    // Remove all node elements from DOM
+                    this.nodes.forEach((node) => {
+                        const nodeElement = document.getElementById(node.id);
+                        if (nodeElement) {
+                            nodeElement.remove();
+                        }
+                    });
+                    
+                    // Clear data structures
+                    this.nodes.clear();
+                    this.connections = [];
+                    this.selectedNode = null;
+                    
+                    // Clear connections SVG
+                    const svg = document.getElementById('connections');
+                    svg.innerHTML = '';
+                    
+                    // Create new root node
+                    this.createRootNode();
+                }
+            }
+            
+            updateNodeText(nodeId, text) {
+                const node = this.nodes.get(nodeId);
+                if (node) {
+                    node.text = text;
+                    this.markDirty();
+                }
+            }
+            
+            handleCanvasClick(e) {
+                if (e.target === this.canvas) {
+                    this.selectNode(null);
+                }
+            }
+            
+            handleContextMenu(e) {
+                e.preventDefault();
+                
+                const nodeElement = e.target.closest('.node');
+                if (nodeElement) {
+                    this.selectNode(nodeElement.id);
+                    this.showContextMenu(e.clientX, e.clientY);
+                }
+            }
+            
+            showContextMenu(x, y) {
+                this.contextMenu.style.left = x + 'px';
+                this.contextMenu.style.top = y + 'px';
+                this.contextMenu.style.display = 'block';
+            }
+            
+            hideContextMenu() {
+                this.contextMenu.style.display = 'none';
+            }
+            
+            selectNode(nodeId) {
+                // Remove previous selection
+                if (this.selectedNode) {
+                    const prevElement = document.getElementById(this.selectedNode);
+                    if (prevElement) {
+                        prevElement.classList.remove('selected');
+                    }
+                }
+                
+                // Set new selection
+                this.selectedNode = nodeId;
+                if (nodeId) {
+                    const nodeElement = document.getElementById(nodeId);
+                    if (nodeElement) {
+                        nodeElement.classList.add('selected');
+                    }
+                }
+            }
+            
+            startDrag(e, node) {
+                e.preventDefault();
+                this.draggedNode = node;
+                this.selectNode(node.id);
+                
+                const nodeElement = document.getElementById(node.id);
+                const rect = nodeElement.getBoundingClientRect();
+                const canvasRect = this.canvas.getBoundingClientRect();
+                
+                this.dragOffset = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+                
+                nodeElement.style.zIndex = '20';
+            }
+            
+            handleMouseDown(e) {
+                const nodeElement = e.target.closest('.node');
+                if (nodeElement) {
+                    const node = this.nodes.get(nodeElement.id);
+                    if (node) {
+                        this.startDrag(e, node);
+                    }
+                }
+            }
+            
+            handleMouseMove(e) {
+                if (this.draggedNode) {
+                    const canvasRect = this.canvas.getBoundingClientRect();
+                    const x = e.clientX - canvasRect.left - this.dragOffset.x;
+                    const y = e.clientY - canvasRect.top - this.dragOffset.y;
+                    
+                    // Keep node within canvas bounds
+                    const nodeElement = document.getElementById(this.draggedNode.id);
+                    const nodeRect = nodeElement.getBoundingClientRect();
+                    const maxX = canvasRect.width - nodeRect.width;
+                    const maxY = canvasRect.height - nodeRect.height;
+                    
+                    this.draggedNode.x = Math.max(0, Math.min(x, maxX));
+                    this.draggedNode.y = Math.max(0, Math.min(y, maxY));
+                    
+                    nodeElement.style.left = this.draggedNode.x + 'px';
+                    nodeElement.style.top = this.draggedNode.y + 'px';
+                    
+                    this.updateConnections();
+                }
+            }
+            
+            handleMouseUp(e) {
+                if (this.draggedNode) {
+                    const nodeElement = document.getElementById(this.draggedNode.id);
+                    nodeElement.style.zIndex = '10';
+                    this.draggedNode = null;
+                    this.markDirty();
+                }
+            }
+            
+            handleKeyDown(e) {
+                if (e.key === 'Delete' && this.selectedNode) {
+                    this.deleteSelected();
+                } else if (e.key === 'Escape') {
+                    this.selectNode(null);
+                    this.hideContextMenu();
+                }
+            }
+            
+            updateConnections() {
+                const svg = document.getElementById('connections');
+                svg.innerHTML = '';
+                
+                this.nodes.forEach(node => {
+                    if (node.parentId) {
+                        const parent = this.nodes.get(node.parentId);
+                        if (parent) {
+                            this.drawConnection(parent, node);
+                        }
+                    }
+                });
+            }
+            
+            drawConnection(parent, child) {
+                const svg = document.getElementById('connections');
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                
+                const parentElement = document.getElementById(parent.id);
+                const childElement = document.getElementById(child.id);
+                
+                if (!parentElement || !childElement) return;
+                
+                const parentRect = parentElement.getBoundingClientRect();
+                const childRect = childElement.getBoundingClientRect();
+                const canvasRect = this.canvas.getBoundingClientRect();
+                
+                const x1 = parent.x + parentRect.width / 2;
+                const y1 = parent.y + parentRect.height / 2;
+                const x2 = child.x + childRect.width / 2;
+                const y2 = child.y + childRect.height / 2;
+                
+                // Create curved path
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2;
+                const controlX = midX;
+                const controlY = midY - Math.abs(x2 - x1) * 0.2;
+                
+                const pathData = `M ${x1} ${y1} Q ${controlX} ${controlY} ${x2} ${y2}`;
+                
+                line.setAttribute('d', pathData);
+                line.setAttribute('class', 'connection-line');
+                svg.appendChild(line);
+            }
+            
+            markDirty() {
+                this.isDirty = true;
+                this.updateSaveStatus('unsaved');
+            }
+            
+            updateSaveStatus(status) {
+                const statusElement = this.saveStatus.querySelector('span');
+                this.saveStatus.className = `save-status ${status}`;
+                
+                switch (status) {
+                    case 'saving':
+                        statusElement.textContent = 'Saving...';
+                        break;
+                    case 'saved':
+                        statusElement.textContent = 'Saved';
+                        break;
+                    case 'error':
+                        statusElement.textContent = 'Save failed';
+                        break;
+                    default:
+                        statusElement.textContent = 'Unsaved changes';
+                }
+            }
+            
+            startAutoSave() {
+                this.autoSaveInterval = setInterval(() => {
+                    if (this.isDirty) {
+                        this.save();
+                    }
+                }, 30000); // Auto-save every 30 seconds
+            }
+            
+            async save() {
+                if (!window.authManager.isLoggedIn()) {
+                    console.error('User not logged in');
+                    return;
+                }
+                
+                this.updateSaveStatus('saving');
+                
+                try {
+                    const data = {
+                        nodes: Array.from(this.nodes.values()),
+                        connections: this.connections,
+                        lastModified: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage as backup
+                    const user = window.authManager.getUser();
+                    const storageKey = `mindmap_${user.id}`;
+                    localStorage.setItem(storageKey, JSON.stringify(data));
+                    
+                    // TODO: Save to server when backend endpoint is available
+                    // const response = await fetch('/api/mindmap/save', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //         'Authorization': `Bearer ${window.authManager.getToken()}`
+                    //     },
+                    //     body: JSON.stringify(data)
+                    // });
+                    
+                    this.isDirty = false;
+                    this.updateSaveStatus('saved');
+                    
+                    // Reset status after 3 seconds
+                    setTimeout(() => {
+                        if (!this.isDirty) {
+                            this.updateSaveStatus('saved');
+                        }
+                    }, 3000);
+                    
+                } catch (error) {
+                    console.error('Save failed:', error);
+                    this.updateSaveStatus('error');
+                }
+            }
+            
+            async load() {
+                if (!window.authManager.isLoggedIn()) {
+                    console.error('User not logged in');
+                    return;
+                }
+                
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                loadingOverlay.style.display = 'flex';
+                
+                try {
+                    const user = window.authManager.getUser();
+                    const storageKey = `mindmap_${user.id}`;
+                    const savedData = localStorage.getItem(storageKey);
+                    
+                    if (savedData) {
+                        const data = JSON.parse(savedData);
+                        
+                        // Clear existing nodes
+                        this.nodes.clear();
+                        
+                        // Load nodes
+                        data.nodes.forEach(nodeData => {
+                            this.nodes.set(nodeData.id, nodeData);
+                            this.renderNode(nodeData);
+                        });
+                        
+                        // Update connections
+                        this.updateConnections();
+                        
+                        this.isDirty = false;
+                        this.updateSaveStatus('saved');
+                    }
+                    
+                    // TODO: Load from server when backend endpoint is available
+                    // const response = await fetch('/api/mindmap/load', {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${window.authManager.getToken()}`
+                    //     }
+                    // });
+                    
+                } catch (error) {
+                    console.error('Load failed:', error);
+                } finally {
+                    loadingOverlay.style.display = 'none';
+                }
+            }
+            
+            editNode() {
+                if (this.selectedNode) {
+                    const nodeElement = document.getElementById(this.selectedNode);
+                    const input = nodeElement.querySelector('.node-input');
+                    input.focus();
+                    input.select();
+                }
+                this.hideContextMenu();
+            }
+        }
+        
+        // Initialize mind map when page loads
+        let mindMap;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check authentication
+            const isAuthenticated = await window.authManager.init();
+            
+            if (isAuthenticated) {
+                mindMap = new MindMap();
+            }
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (mindMap && mindMap.isDirty) {
+                mindMap.save();
+            }
+        });
+    </script>
+
+    <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

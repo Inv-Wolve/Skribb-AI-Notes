@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skribb AI - Dashboard | Your Smart Notes Command Center</title>
+    <meta name="description" content="Manage your transformed notes, access AI features, and track your productivity with Skribb AI's comprehensive dashboard." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        accent: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        outfit: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* WebKit only */
+        line-clamp: 2;         /* Standard (experimental) */
+        overflow: hidden;
+        }
+        
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200;
+        }
+        
+        .btn-outline {
+            @apply border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-medium px-4 py-2 rounded-lg transition-colors duration-200;
+        }
+        
+        .card {
+            @apply bg-white rounded-xl shadow-sm border border-gray-100;
+        }
+        
+        .shadow-strong {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading dashboard...</p>
+        </div>
+    </div>
+    
+    <!-- Auth Required Modal -->
+    <div id="auth-error-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg max-w-md mx-4">
+            <h3 class="text-lg font-semibold mb-4">Authentication Required</h3>
+            <p class="text-text-secondary mb-6">Please log in to access your dashboard.</p>
+            <div class="flex space-x-4">
+                <a href="get-started.html" class="btn-primary flex-1 text-center">Go to Login</a>
+                <button onclick="window.location.reload()" class="btn-outline flex-1">Retry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-blue-600" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#gradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3b82f6"/>
+                                    <stop offset="100%" style="stop-color:#8b5cf6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <span class="text-xl font-bold text-gradient-primary">Skribb AI</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors px-3 py-2 rounded-md text-sm">Home</a>
+                        <a href="#" class="text-blue-600 font-medium px-3 py-2 rounded-md text-sm">Dashboard</a>
+                        <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors px-3 py-2 rounded-md text-sm">Features</a>
+                        <button id="upload-btn" class="btn-primary text-sm px-4 py-2">Upload Notes</button>
+                    </div>
+                </div>
+
+                <!-- User Profile -->
+                <div class="flex items-center space-x-4">
+                    <button id="notifications-btn" class="relative p-2 text-gray-500 hover:text-blue-600 transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-6.5a5.5 5.5 0 10-11 0v-6.5h5"/>
+                        </svg>
+                        <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
+                    </button>
+                    
+                    <!-- User Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profile-btn" class="flex items-center space-x-2 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold text-sm" id="user-avatar">
+                                U
+                            </div>
+                            <span id="user-display-name" class="text-sm font-medium text-gray-900 hidden md:block">User</span>
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Profile Dropdown Menu -->
+                        <div id="profile-menu" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-10">
+                            <div class="py-2">
+                                <div class="px-4 py-2 border-b border-gray-100">
+                                    <p id="menu-user-name" class="text-sm font-medium text-gray-900">User</p>
+                                    <p id="menu-user-email" class="text-xs text-gray-500">user@example.com</p>
+                                </div>
+                                <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                                    Account Settings
+                                </button>
+                                <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                                    Billing
+                                </button>
+                                <div class="border-t border-gray-100 my-1"></div>
+                                <button id="logout-btn" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors">
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg max-w-lg mx-4 w-full">
+            <h3 class="text-lg font-semibold mb-4">Upload Notes</h3>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-4" id="drop-zone">
+                <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                <p class="text-gray-600">Drag and drop files here, or <button class="text-blue-600 hover:text-blue-700 font-medium">browse</button></p>
+                <input type="file" id="file-input" multiple accept="image/*,.pdf,.doc,.docx" class="hidden">
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button id="cancel-upload" class="btn-outline">Cancel</button>
+                <button id="process-files" class="btn-primary" disabled>Process Files</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <section class="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <!-- Welcome Message -->
+                <div class="md:col-span-2">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        <span id="welcome-message">Welcome back! 👋</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-6" id="user-stats-summary">
+                        Loading your productivity stats...
+                    </p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="flex flex-wrap gap-6">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full" id="accuracy-indicator"></div>
+                            <span class="text-sm text-gray-600" id="accuracy-stat">Loading...</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full" id="projects-indicator"></div>
+                            <span class="text-sm text-gray-600" id="projects-stat">Loading...</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-purple-500 rounded-full" id="processing-indicator"></div>
+                            <span class="text-sm text-gray-600" id="processing-stat">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Zone -->
+                <div class="card p-6 border-2 border-dashed border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50 hover:border-blue-400 transition-all duration-300 cursor-pointer group" id="quick-upload">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold mb-2">Upload New Notes</h3>
+                        <p class="text-sm text-gray-600">Drag & drop or click to upload</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Dashboard Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="space-y-6">
+                    <!-- Navigation Menu -->
+                    <div class="card p-6">
+                        <h3 class="font-semibold mb-4 text-gray-900">Navigation</h3>
+                        <nav class="space-y-2">
+                            <a href="#my-notes" class="nav-link active flex items-center space-x-3 text-blue-600 font-medium p-2 rounded-lg bg-blue-50">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                                <span>My Notes</span>
+                            </a>
+                            <a href="#recent-transcriptions" class="nav-link flex items-center space-x-3 text-gray-600 hover:text-blue-600 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Recent Activity</span>
+                            </a>
+                            <a href="#ai-tools" class="nav-link flex items-center space-x-3 text-gray-600 hover:text-blue-600 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                                <span>AI Tools</span>
+                            </a>
+                            <a href="#processing-queue" class="nav-link flex items-center space-x-3 text-gray-600 hover:text-blue-600 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                <span>Processing Queue</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <!-- Folders & Categories -->
+                    <div class="card p-6">
+                        <h3 class="font-semibold mb-4 text-gray-900">Folders</h3>
+                        <div class="space-y-2" id="folders-list">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card p-6">
+                        <h3 class="font-semibold mb-4 text-gray-900">Quick Actions</h3>
+                        <div class="space-y-2">
+                            <button class="quick-action w-full flex items-center space-x-2 text-left p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                <span class="text-sm">Search Notes</span>
+                            </button>
+                            <button class="quick-action w-full flex items-center space-x-2 text-left p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                </svg>
+                                <span class="text-sm">Batch Export</span>
+                            </button>
+                            <button class="quick-action w-full flex items-center space-x-2 text-left p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span class="text-sm">Settings</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-3">
+                <div class="space-y-8">
+                    <!-- My Notes Section -->
+                    <section id="my-notes">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">My Notes</h2>
+                            <div class="flex items-center space-x-4">
+                                <select id="category-filter" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="all">All Categories</option>
+                                </select>
+                                <button id="view-toggle" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                    </svg>
+                                    <span class="text-sm">Grid View</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Notes Grid -->
+                        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6" id="notes-grid">
+                            <!-- Dynamically populated -->
+                        </div>
+
+                        <!-- Load More Button -->
+                        <div class="text-center mt-8">
+                            <button id="load-more-notes" class="btn-primary">Load More Notes</button>
+                        </div>
+                    </section>
+
+                    <!-- Recent Transcriptions Section -->
+                    <section id="recent-transcriptions">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">Recent Transcriptions</h2>
+                            <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                        </div>
+
+                        <div class="card">
+                            <div class="p-6 space-y-4" id="transcriptions-list">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- AI Tools Hub Section -->
+                    <section id="ai-tools">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">AI Tools Hub</h2>
+                            <button class="text-blue-600 hover:text-blue-700 text-sm font-medium">Explore All Features</button>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="ai-tools-grid">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+
+                    <!-- Processing Queue Section -->
+                    <section id="processing-queue">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">Processing Queue</h2>
+                            <span class="text-sm text-gray-600" id="queue-count">0 items in queue</span>
+                        </div>
+
+                        <div class="card">
+                            <div class="p-6 space-y-4" id="processing-list">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#footerGradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0066FF"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="text-xl font-outfit font-bold ml-3">Skribb AI</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Transform your handwritten notes into polished digital content with the power of AI. Never waste time retyping again.
+                    </p>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h3 class="font-outfit font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="features-hub.html" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="how-it-works.html" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="get-started.html" class="text-gray-400 hover:text-white transition-colors">Sign Up and Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div>
+                    <h3 class="font-outfit font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="./Legal/support.html" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="./Legal/privacy-policy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="./Legal/terms-of-service.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Skribb AI. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Application State Management
+        class SkribbAI {
+            constructor() {
+                this.currentUser = null;
+                this.notes = [];
+                this.processingQueue = [];
+                this.folders = [];
+                this.userStats = {
+                    notesTransformed: 0,
+                    timeSaved: 0,
+                    accuracyRate: 95,
+                    activeProjects: 0,
+                    processingQueue: 0
+                };
+                this.init();
+            }
+
+            init() {
+                this.loadUserData();
+                this.setupEventListeners();
+                this.checkAuth();
+            }
+
+            // Authentication
+            checkAuth() {
+                const user = localStorage.getItem('skribb_user');
+                if (user) {
+                    this.currentUser = JSON.parse(user);
+                    this.showDashboard();
+                } else {
+                    this.showAuthModal();
+                }
+            }
+
+            async login(email, password) {
+                // Simulate login
+                const users = JSON.parse(localStorage.getItem('skribb_users') || '{}');
+                const user = users[email];
+                
+                if (user && user.password === password) {
+                    this.currentUser = { id: user.id, email, name: user.name || email.split('@')[0] };
+                    localStorage.setItem('skribb_user', JSON.stringify(this.currentUser));
+                    this.showDashboard();
+                    return true;
+                }
+                return false;
+            }
+
+            async signup(email, password, name) {
+                // Simulate signup
+                const users = JSON.parse(localStorage.getItem('skribb_users') || '{}');
+                
+                if (users[email]) {
+                    return false; // User exists
+                }
+                
+                const userId = Date.now().toString();
+                users[email] = { id: userId, password, name: name || email.split('@')[0] };
+                localStorage.setItem('skribb_users', JSON.stringify(users));
+                
+                this.currentUser = { id: userId, email, name: name || email.split('@')[0] };
+                localStorage.setItem('skribb_user', JSON.stringify(this.currentUser));
+                this.showDashboard();
+                return true;
+            }
+
+            logout() {
+                localStorage.removeItem('skribb_user');
+                this.currentUser = null;
+                location.reload();
+            }
+
+            // Data Management
+            loadUserData() {
+                if (!this.currentUser) return;
+                
+                const userData = localStorage.getItem(`skribb_data_${this.currentUser.id}`);
+                if (userData) {
+                    const data = JSON.parse(userData);
+                    this.notes = data.notes || [];
+                    this.folders = data.folders || [];
+                    this.userStats = data.userStats || this.userStats;
+                    this.processingQueue = data.processingQueue || [];
+                } else {
+                    this.initializeDefaultData();
+                }
+            }
+
+            saveUserData() {
+                if (!this.currentUser) return;
+                
+                const data = {
+                    notes: this.notes,
+                    folders: this.folders,
+                    userStats: this.userStats,
+                    processingQueue: this.processingQueue
+                };
+                localStorage.setItem(`skribb_data_${this.currentUser.id}`, JSON.stringify(data));
+            }
+
+            initializeDefaultData() {
+                this.folders = [
+                    { name: 'Lecture Notes', color: 'yellow', count: 0 },
+                    { name: 'Meeting Notes', color: 'green', count: 0 },
+                    { name: 'Research', color: 'orange', count: 0 },
+                    { name: 'Personal', color: 'blue', count: 0 }
+                ];
+                this.saveUserData();
+            }
+
+            // UI Methods
+            showAuthModal() {
+                document.getElementById('loading-overlay').classList.add('hidden');
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
+
+            showDashboard() {
+                document.getElementById('loading-overlay').classList.add('hidden');
+                document.getElementById('auth-modal').classList.add('hidden');
+                this.loadUserData();
+                this.updateUI();
+            }
+
+            updateUI() {
+                this.updateUserProfile();
+                this.updateStats();
+                this.renderNotes();
+                this.renderFolders();
+                this.renderTranscriptions();
+                this.renderAITools();
+                this.renderProcessingQueue();
+                this.updateCategoryFilter();
+            }
+
+            updateUserProfile() {
+                const name = this.currentUser.name || this.currentUser.email.split('@')[0];
+                const initials = name.charAt(0).toUpperCase() + (name.split(' ')[1]?.charAt(0).toUpperCase() || name.charAt(1).toUpperCase() || '');
+                
+                document.getElementById('user-avatar').textContent = initials;
+                document.getElementById('user-display-name').textContent = name;
+                document.getElementById('menu-user-name').textContent = name;
+                document.getElementById('menu-user-email').textContent = this.currentUser.email;
+                document.getElementById('welcome-message').textContent = `Welcome back, ${name}! 👋`;
+            }
+
+            updateStats() {
+                document.getElementById('user-stats-summary').textContent = 
+                    `You've transformed ${this.userStats.notesTransformed} notes this month and saved ${this.userStats.timeSaved.toFixed(1)} hours of typing time.`;
+                
+                document.getElementById('accuracy-stat').textContent = `${this.userStats.accuracyRate}% Accuracy Rate`;
+                document.getElementById('projects-stat').textContent = `${this.userStats.activeProjects} Active Projects`;
+                document.getElementById('processing-stat').textContent = `${this.processingQueue.length} Processing`;
+                
+                const notificationCount = document.getElementById('notification-count');
+                if (this.processingQueue.length > 0) {
+                    notificationCount.textContent = this.processingQueue.length;
+                    notificationCount.classList.remove('hidden');
+                } else {
+                    notificationCount.classList.add('hidden');
+                }
+            }
+
+            renderNotes() {
+                const grid = document.getElementById('notes-grid');
+                grid.innerHTML = '';
+
+                if (this.notes.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">No notes yet</h3>
+                            <p class="text-gray-600 mb-4">Upload your first handwritten note to get started!</p>
+                            <button class="btn-primary" onclick="app.showUploadModal()">Upload Notes</button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.notes.forEach(note => {
+                    const noteCard = this.createNoteCard(note);
+                    grid.appendChild(noteCard);
+                });
+            }
+
+            createNoteCard(note) {
+                const div = document.createElement('div');
+                div.className = 'card p-6 group hover:shadow-strong transition-all duration-300 cursor-pointer';
+                
+                const statusColor = {
+                    'completed': 'bg-green-500',
+                    'processing': 'bg-yellow-500 animate-pulse',
+                    'error': 'bg-red-500'
+                };
+
+                const statusText = {
+                    'completed': 'Transformed',
+                    'processing': 'Processing',
+                    'error': 'Review Needed'
+                };
+
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 ${statusColor[note.status]} rounded-full"></div>
+                            <span class="text-sm font-medium text-${note.status === 'completed' ? 'green' : note.status === 'processing' ? 'yellow' : 'red'}-600">${statusText[note.status]}</span>
+                        </div>
+                        <button class="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-gray-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="mb-4">
+                        ${note.image ? `<img src="${note.image}" alt="Note preview" class="w-full h-32 object-cover rounded-lg mb-3" />` : ''}
+                        <h3 class="font-semibold text-lg mb-2">${note.title}</h3>
+                        <p class="text-sm text-gray-600 line-clamp-2">${note.content}</p>
+                    </div>
+
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>${new Date(note.createdAt).toLocaleDateString()}</span>
+                        <div class="flex items-center space-x-4">
+                            <span class="flex items-center space-x-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>${note.accuracy || 95}%</span>
+                            </span>
+                            <span>${note.wordCount || Math.floor(note.content.length / 5)} words</span>
+                        </div>
+                    </div>
+                `;
+
+                return div;
+            }
+
+            renderFolders() {
+                const list = document.getElementById('folders-list');
+                list.innerHTML = '';
+
+                this.folders.forEach(folder => {
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer';
+                    
+                    const colorMap = {
+                        'yellow': 'text-yellow-600',
+                        'green': 'text-green-600',
+                        'orange': 'text-orange-600',
+                        'blue': 'text-blue-600'
+                    };
+
+                    div.innerHTML = `
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 ${colorMap[folder.color]}" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/>
+                            </svg>
+                            <span class="text-sm">${folder.name}</span>
+                        </div>
+                        <span class="text-xs bg-${folder.color}-50 text-${folder.color}-600 px-2 py-1 rounded-full">${folder.count}</span>
+                    `;
+                    
+                    list.appendChild(div);
+                });
+            }
+
+            renderTranscriptions() {
+                const list = document.getElementById('transcriptions-list');
+                list.innerHTML = '';
+
+                const recentNotes = this.notes.slice(-3).reverse();
+                
+                if (recentNotes.length === 0) {
+                    list.innerHTML = `
+                        <div class="text-center py-8">
+                            <p class="text-gray-600">No recent transcriptions</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                recentNotes.forEach(note => {
+                    const div = document.createElement('div');
+                    div.className = 'flex items-start space-x-4 p-4 rounded-lg hover:bg-gray-50 transition-colors';
+                    
+                    div.innerHTML = `
+                        ${note.image ? `<img src="${note.image}" alt="Note thumbnail" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" />` : 
+                        `<div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>`}
+                        <div class="flex-grow min-w-0">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-semibold text-lg truncate">${note.title}</h3>
+                                <span class="text-sm text-gray-500 flex-shrink-0">${this.getTimeAgo(note.createdAt)}</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">${note.content}</p>
+                            <div class="flex items-center space-x-4">
+                                <button class="btn-primary text-xs px-3 py-1">Edit</button>
+                                <button class="text-green-600 hover:text-green-700 text-xs font-medium">Grammar Fix</button>
+                                <button class="text-orange-600 hover:text-orange-700 text-xs font-medium">Summarize</button>
+                                <button class="text-gray-600 hover:text-blue-600 text-xs">Export</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    list.appendChild(div);
+                });
+            }
+
+            renderAITools() {
+                const grid = document.getElementById('ai-tools-grid');
+                const tools = [
+                    {
+                        name: 'Smart Transcription',
+                        description: 'Convert handwriting to digital text with up to 95% accuracy',
+                        icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z',
+                        gradient: 'from-blue-500 to-purple-500',
+                        usage: this.userStats.notesTransformed
+                    },
+                    {
+                        name: 'Grammar Fix',
+                        description: 'Automatically correct grammar and improve readability',
+                        icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+                        gradient: 'from-green-500 to-orange-500',
+                        usage: Math.floor(this.userStats.notesTransformed * 0.7)
+                    },
+                    {
+                        name: 'Smart Summarization',
+                        description: 'Extract key points and create concise summaries',
+                        icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+                        gradient: 'from-orange-500 to-blue-500',
+                        usage: Math.floor(this.userStats.notesTransformed * 0.5)
+                    },
+                    {
+                        name: 'Code Mode',
+                        description: 'Recognize and format code from screenshots',
+                        icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+                        gradient: 'from-blue-500 to-orange-500',
+                        usage: Math.floor(this.userStats.notesTransformed * 0.3)
+                    }
+                ];
+
+                grid.innerHTML = '';
+                tools.forEach(tool => {
+                    const div = document.createElement('div');
+                    div.className = 'card p-6 text-center hover:shadow-strong transition-all duration-300 cursor-pointer group';
+                    
+                    div.innerHTML = `
+                        <div class="w-16 h-16 bg-gradient-to-br ${tool.gradient} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${tool.icon}"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">${tool.name}</h3>
+                        <p class="text-gray-600 text-sm mb-4">${tool.description}</p>
+                        <div class="text-center">
+                            <span class="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full">Used ${tool.usage} times this month</span>
+                        </div>
+                    `;
+                    
+                    grid.appendChild(div);
+                });
+            }
+
+            renderProcessingQueue() {
+                const list = document.getElementById('processing-list');
+                const count = document.getElementById('queue-count');
+                
+                count.textContent = `${this.processingQueue.length} items in queue`;
+                
+                list.innerHTML = '';
+                
+                if (this.processingQueue.length === 0) {
+                    list.innerHTML = `
+                        <div class="text-center py-8">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <p class="text-gray-600">No items in processing queue</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.processingQueue.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = `flex items-center space-x-4 p-4 border-l-4 border-${item.status === 'processing' ? 'yellow' : 'blue'}-500 bg-${item.status === 'processing' ? 'yellow' : 'blue'}-50 rounded-lg`;
+                    
+                    div.innerHTML = `
+                        <div class="w-12 h-12 bg-${item.status === 'processing' ? 'yellow' : 'blue'}-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-white ${item.status === 'processing' ? 'animate-spin' : ''}" fill="none" viewBox="0 0 24 24">
+                                ${item.status === 'processing' ? 
+                                    `<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>` :
+                                    `<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>`
+                                }
+                            </svg>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-semibold">${item.title}</h3>
+                                <span class="text-sm text-${item.status === 'processing' ? 'yellow' : 'blue'}-600 font-medium">${item.progress}% Complete</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-2">${item.description}</p>
+                            <div class="w-full bg-${item.status === 'processing' ? 'yellow' : 'blue'}-100 rounded-full h-2">
+                                <div class="bg-${item.status === 'processing' ? 'yellow' : 'blue'}-500 h-2 rounded-full transition-all duration-300" style="width: ${item.progress}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    list.appendChild(div);
+                });
+            }
+
+            updateCategoryFilter() {
+                const select = document.getElementById('category-filter');
+                select.innerHTML = '<option value="all">All Categories</option>';
+                
+                this.folders.forEach(folder => {
+                    const option = document.createElement('option');
+                    option.value = folder.name.toLowerCase().replace(' ', '-');
+                    option.textContent = folder.name;
+                    select.appendChild(option);
+                });
+            }
+
+            // File Upload
+            showUploadModal() {
+                document.getElementById('upload-modal').classList.remove('hidden');
+            }
+
+            hideUploadModal() {
+                document.getElementById('upload-modal').classList.add('hidden');
+                document.getElementById('file-input').value = '';
+                document.getElementById('process-files').disabled = true;
+            }
+
+            handleFileUpload(files) {
+                if (files.length === 0) return;
+
+                // Add to processing queue
+                Array.from(files).forEach(file => {
+                    const queueItem = {
+                        id: Date.now() + Math.random(),
+                        title: file.name,
+                        description: 'Processing uploaded file...',
+                        progress: 0,
+                        status: 'processing'
+                    };
+                    this.processingQueue.push(queueItem);
+
+                    // Create note
+                    const note = {
+                        id: Date.now() + Math.random(),
+                        title: file.name.replace(/\.[^/.]+$/, ''),
+                        content: 'Processing file content...',
+                        status: 'processing',
+                        createdAt: Date.now(),
+                        folder: 'Personal',
+                        accuracy: 0,
+                        wordCount: 0
+                    };
+
+                    // If it's an image, create URL
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            note.image = e.target.result;
+                            this.simulateProcessing(queueItem, note);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        this.simulateProcessing(queueItem, note);
+                    }
+
+                    this.notes.push(note);
+                });
+
+                this.saveUserData();
+                this.updateUI();
+                this.hideUploadModal();
+            }
+
+            simulateProcessing(queueItem, note) {
+                const interval = setInterval(() => {
+                    queueItem.progress += Math.random() * 15 + 5;
+                    
+                    if (queueItem.progress >= 100) {
+                        queueItem.progress = 100;
+                        queueItem.status = 'completed';
+                        
+                        // Complete the note
+                        note.status = 'completed';
+                        note.content = this.generateSampleContent(note.title);
+                        note.accuracy = Math.floor(Math.random() * 10) + 90;
+                        note.wordCount = Math.floor(note.content.length / 5);
+                        
+                        // Update stats
+                        this.userStats.notesTransformed++;
+                        this.userStats.timeSaved += Math.random() * 2 + 0.5;
+                        this.userStats.activeProjects = this.notes.filter(n => n.status === 'completed').length;
+                        
+                        // Remove from processing queue after delay
+                        setTimeout(() => {
+                            this.processingQueue = this.processingQueue.filter(item => item.id !== queueItem.id);
+                            this.saveUserData();
+                            this.updateUI();
+                        }, 2000);
+                        
+                        clearInterval(interval);
+                    }
+                    
+                    this.saveUserData();
+                    this.updateUI();
+                }, 1000);
+            }
+
+            generateSampleContent(title) {
+                const samples = [
+                    "This document contains important information about the topic discussed. Key points include methodology, findings, and conclusions that provide valuable insights.",
+                    "Meeting notes covering project updates, action items, and decisions made during the session. Important deadlines and responsibilities were assigned.",
+                    "Research findings indicate significant correlations between variables. Data analysis reveals trends that support the initial hypothesis.",
+                    "Lecture content covering fundamental concepts and practical applications. Examples provided demonstrate real-world implementation scenarios.",
+                    "Personal reflections on recent experiences and insights gained. Thoughts on future directions and potential opportunities for growth."
+                ];
+                return samples[Math.floor(Math.random() * samples.length)] + ` Additional details about ${title} are documented here with comprehensive analysis and supporting evidence.`;
+            }
+
+            // Utility Methods
+            getTimeAgo(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+
+                if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+                if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+                if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                return 'Just now';
+            }
+
+            // Event Listeners
+            setupEventListeners() {
+                // Auth
+                document.getElementById('login-btn').addEventListener('click', this.handleLogin.bind(this));
+                document.getElementById('signup-btn').addEventListener('click', this.handleSignup.bind(this));
+                document.getElementById('logout-btn').addEventListener('click', this.logout.bind(this));
+                
+                // Profile menu
+                document.getElementById('profile-btn').addEventListener('click', this.toggleProfileMenu.bind(this));
+                document.addEventListener('click', this.handleOutsideClick.bind(this));
+                
+                // Upload
+                document.getElementById('upload-btn').addEventListener('click', this.showUploadModal.bind(this));
+                document.getElementById('quick-upload').addEventListener('click', this.showUploadModal.bind(this));
+                document.getElementById('cancel-upload').addEventListener('click', this.hideUploadModal.bind(this));
+                document.getElementById('file-input').addEventListener('change', this.handleFileSelection.bind(this));
+                document.getElementById('process-files').addEventListener('click', this.processSelectedFiles.bind(this));
+                
+                // Drag and drop
+                const dropZone = document.getElementById('drop-zone');
+                dropZone.addEventListener('click', () => document.getElementById('file-input').click());
+                dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
+                dropZone.addEventListener('drop', this.handleDrop.bind(this));
+                
+                // Navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', this.handleNavigation.bind(this));
+                });
+                
+                // Enter key for auth
+                document.getElementById('auth-password').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        document.getElementById('login-btn').click();
+                    }
+                });
+            }
+
+            async handleLogin() {
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                const errorDiv = document.getElementById('auth-error');
+                
+                if (!email || !password) {
+                    this.showAuthError('Please fill in all fields');
+                    return;
+                }
+                
+                const success = await this.login(email, password);
+                if (!success) {
+                    this.showAuthError('Invalid email or password');
+                } else {
+                    errorDiv.classList.add('hidden');
+                }
+            }
+
+            async handleSignup() {
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                const name = document.getElementById('auth-name').value;
+                const errorDiv = document.getElementById('auth-error');
+                
+                if (!email || !password) {
+                    this.showAuthError('Please fill in email and password');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    this.showAuthError('Password must be at least 6 characters');
+                    return;
+                }
+                
+                const success = await this.signup(email, password, name);
+                if (!success) {
+                    this.showAuthError('Email already exists');
+                } else {
+                    errorDiv.classList.add('hidden');
+                }
+            }
+
+            showAuthError(message) {
+                const errorDiv = document.getElementById('auth-error');
+                errorDiv.textContent = message;
+                errorDiv.classList.remove('hidden');
+            }
+
+            toggleProfileMenu() {
+                const menu = document.getElementById('profile-menu');
+                menu.classList.toggle('hidden');
+            }
+
+            handleOutsideClick(e) {
+                const menu = document.getElementById('profile-menu');
+                const button = document.getElementById('profile-btn');
+                
+                if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !button.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            }
+
+            handleFileSelection(e) {
+                const files = e.target.files;
+                document.getElementById('process-files').disabled = files.length === 0;
+            }
+
+            processSelectedFiles() {
+                const files = document.getElementById('file-input').files;
+                this.handleFileUpload(files);
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                e.currentTarget.classList.add('border-blue-400', 'bg-blue-50');
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                e.currentTarget.classList.remove('border-blue-400', 'bg-blue-50');
+                const files = e.dataTransfer.files;
+                this.handleFileUpload(files);
+            }
+
+            handleNavigation(e) {
+                e.preventDefault();
+                
+                // Update active state
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active', 'text-blue-600', 'font-medium', 'bg-blue-50');
+                    link.classList.add('text-gray-600', 'hover:text-blue-600');
+                });
+                
+                e.currentTarget.classList.remove('text-gray-600', 'hover:text-blue-600');
+                e.currentTarget.classList.add('active', 'text-blue-600', 'font-medium', 'bg-blue-50');
+                
+                // Scroll to section
+                const href = e.currentTarget.getAttribute('href');
+                if (href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
+        }
+
+        // Initialize the application
+        const app = new SkribbAI();
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

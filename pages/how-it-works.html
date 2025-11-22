@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skribb AI -How It Works | 3-Step AI Note Transformation Process</title>
+    <meta name="description" content="Discover how Skribb AI transforms handwritten notes into digital content in 3 simple steps: Capture, Process, Transform. See the magic behind the AI technology." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fskribbai9526back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background text-text-primary">
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-blur-sm border-b border-border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#gradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0066FF"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <span class="text-xl font-outfit font-bold text-gradient-primary">Skribb AI</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="Homepage.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Home</a>
+                        <a href="features-hub.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Features</a>
+                        <a href="how-it-works.html" class="text-primary font-medium px-3 py-2 rounded-md text-sm">How It Works</a>
+                        <a href="get-started.html" class="btn-primary text-sm px-4 py-2">Get Started</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-text-secondary hover:text-primary p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-20 lg:py-32">
+        <!-- Floating Geometric Shapes -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full opacity-10 animate-pulse"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-lg opacity-10 animate-pulse delay-1000"></div>
+            <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-full opacity-10 animate-pulse delay-2000"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl md:text-6xl font-outfit font-bold text-gradient-primary mb-6">
+                    How Skribb AI Works
+                </h1>
+                <p class="text-xl md:text-2xl text-text-secondary mb-8 max-w-3xl mx-auto">
+                    Discover the magic behind our AI-powered transformation process. From messy handwriting to polished digital content in just three simple steps.
+                </p>
+                <div class="flex justify-center">
+                    <a href="get-started.html" class="btn-primary text-lg px-8 py-4">Try It Now</a>
+                </div>
+            </div>
+
+            <!-- Process Overview -->
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <!-- Step 1 -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-outfit font-bold text-white">1</span>
+                        </div>
+                        <h3 class="text-xl font-outfit font-semibold mb-2">Capture</h3>
+                        <p class="text-text-secondary">Upload your handwritten notes using any device</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-outfit font-bold text-white">2</span>
+                        </div>
+                        <h3 class="text-xl font-outfit font-semibold mb-2">Process</h3>
+                        <p class="text-text-secondary">AI analyzes and understands your handwriting</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-outfit font-bold text-white">3</span>
+                        </div>
+                        <h3 class="text-xl font-outfit font-semibold mb-2">Transform</h3>
+                        <p class="text-text-secondary">Get polished, formatted digital content</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 1: Capture -->
+    <section id="step-capture" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Content -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl font-outfit font-bold text-white">1</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-outfit font-bold text-text-primary">Capture Your Notes</h2>
+                    </div>
+                    
+                    <p class="text-xl text-text-secondary mb-8">
+                        Multiple ways to get your handwritten content into Skribb AI. Choose the method that works best for you.
+                    </p>
+
+                    <!-- Capture Methods -->
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Smartphone Camera</h3>
+                                <p class="text-text-secondary">Simply snap a photo of your notes with your phone's camera. The AI works best with good lighting conditions.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Document Scanner</h3>
+                                <p class="text-text-secondary">Use any document scanner or scanning app to create high-quality digital images of your handwritten notes.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-accent-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">File Upload</h3>
+                                <p class="text-text-secondary">Drag and drop existing images of your notes, or browse and select files from your device.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pro Tips -->
+                    <div class="mt-8 p-6 bg-primary-50 rounded-xl">
+                        <h4 class="font-outfit font-semibold text-lg mb-4 text-primary">Pro Tips for Best Results</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Ensure good lighting - natural light works best
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Keep the camera parallel to the paper surface
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Include the entire page with some margin space
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Avoid shadows and reflections on the paper
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Visual Demo -->
+                <div class="relative">
+                    <div class="transformation-showcase">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl font-outfit font-semibold mb-2">Capture Methods Demo</h3>
+                            <p class="text-text-secondary">Click to see different capture options</p>
+                        </div>
+                        
+                        <!-- Interactive Capture Demo -->
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 cursor-pointer hover:shadow-md transition-all duration-300" onclick="showCaptureDemo('camera')">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-outfit font-semibold">Camera Capture</div>
+                                        <div class="text-sm text-text-secondary">Point and shoot</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 cursor-pointer hover:shadow-md transition-all duration-300" onclick="showCaptureDemo('upload')">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-outfit font-semibold">File Upload</div>
+                                        <div class="text-sm text-text-secondary">Drag & drop files</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Demo Preview Area -->
+                        <div id="capture-demo" class="mt-6 p-4 bg-surface rounded-lg min-h-32 flex items-center justify-center">
+                            <div class="text-center text-text-muted">
+                                <svg class="w-12 h-12 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <p>Click a capture method above to see demo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 2: Process -->
+    <section id="step-process" class="py-20 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Visual Demo -->
+                <div class="relative order-2 lg:order-1">
+                    <div class="transformation-showcase">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl font-outfit font-semibold mb-2">AI Processing Visualization</h3>
+                            <p class="text-text-secondary">Watch our neural networks analyze your handwriting</p>
+                        </div>
+                        
+                        <!-- AI Processing Animation -->
+                        <div class="relative bg-white rounded-lg p-6 min-h-80">
+                            <!-- Handwriting Sample -->
+                            <div class="mb-6">
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Handwritten notes being processed" class="w-full h-32 object-cover rounded-lg opacity-80" loading="lazy" onerror="this.src='https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                            </div>
+
+                            <!-- Processing Steps -->
+                            <div class="space-y-4">
+                                <div class="flex items-center p-3 bg-primary-50 rounded-lg">
+                                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-3">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-primary">Image Preprocessing</div>
+                                        <div class="text-sm text-text-secondary">Enhancing contrast and removing noise</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center p-3 bg-secondary-50 rounded-lg">
+                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center mr-3 animate-pulse">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-secondary">Character Recognition</div>
+                                        <div class="text-sm text-text-secondary">Neural networks identifying letters and words</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center p-3 bg-accent-50 rounded-lg opacity-60">
+                                    <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center mr-3">
+                                        <div class="w-3 h-3 bg-white rounded-full"></div>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-accent">Context Analysis</div>
+                                        <div class="text-sm text-text-secondary">Understanding meaning and structure</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Processing Stats -->
+                            <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <div class="text-2xl font-outfit font-bold text-primary">80%</div>
+                                    <div class="text-xs text-text-secondary">Accuracy</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-outfit font-bold text-secondary">2.3s</div>
+                                    <div class="text-xs text-text-secondary">Avg Speed</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-outfit font-bold text-accent">50+</div>
+                                    <div class="text-xs text-text-secondary">Languages</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="order-1 lg:order-2">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl font-outfit font-bold text-white">2</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-outfit font-bold text-text-primary">AI Processing Engine</h2>
+                    </div>
+                    
+                    <p class="text-xl text-text-secondary mb-8">
+                        Our advanced neural networks analyze your handwriting with human-level understanding, recognizing context and meaning beyond just individual characters.
+                    </p>
+
+                    <!-- Technical Features -->
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Deep Learning Recognition</h3>
+                                <p class="text-text-secondary">Trained on millions of handwriting samples to understand diverse writing styles, from neat cursive to messy scribbles.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Context Understanding</h3>
+                                <p class="text-text-secondary">Natural language processing identifies relationships between words, corrects obvious errors, and maintains original meaning.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-accent-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Privacy-First Processing</h3>
+                                <p class="text-text-secondary">All processing happens securely in the cloud with enterprise-grade encryption. Your notes are never stored permanently.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Processing Speed Info -->
+                    <div class="mt-8 p-6 bg-secondary-50 rounded-xl">
+                        <h4 class="font-outfit font-semibold text-lg mb-4 text-secondary">Lightning-Fast Processing</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-2xl font-outfit font-bold text-secondary mb-1">2-5 seconds</div>
+                                <div class="text-sm text-text-secondary">Single page notes</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-outfit font-bold text-secondary mb-1">10-15 seconds</div>
+                                <div class="text-sm text-text-secondary">Multi-page documents</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 3: Transform -->
+    <section id="step-transform" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Content -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl font-outfit font-bold text-white">3</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-outfit font-bold text-text-primary">Transform & Enhance</h2>
+                    </div>
+                    
+                    <p class="text-xl text-text-secondary mb-8">
+                        Get your content in multiple formats with intelligent enhancements. From basic transcription to advanced summarization and formatting.
+                    </p>
+
+                    <!-- Output Options -->
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Clean Transcription</h3>
+                                <p class="text-text-secondary">Perfect digital text that maintains your original meaning while fixing obvious errors and improving readability.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Grammar Enhancement</h3>
+                                <p class="text-text-secondary">Automatic grammar correction, punctuation fixes, and style improvements to make your notes professional-ready.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-accent-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Smart Summarization</h3>
+                                <p class="text-text-secondary">Extract key points, create bullet lists, and generate concise summaries perfect for studying or sharing.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center mr-4 mt-1">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-outfit font-semibold text-lg mb-2">Code Recognition</h3>
+                                <p class="text-text-secondary">Special mode for developers that recognizes code syntax, maintains proper formatting, and identifies programming languages.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Options -->
+                    <div class="mt-8 p-6 bg-accent-50 rounded-xl">
+                        <h4 class="font-outfit font-semibold text-lg mb-4 text-accent">Multiple Export Formats</h4>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Plain Text (.txt)
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Microsoft Word (.docx)
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                PDF Document (.pdf)
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-success mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Markdown (.md)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Demo -->
+                <div class="relative">
+                    <div class="transformation-showcase">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl font-outfit font-semibold mb-2">Transformation Results</h3>
+                            <p class="text-text-secondary">See the different output options</p>
+                        </div>
+                        
+                        <!-- Output Format Tabs -->
+                        <div class="flex space-x-2 mb-4">
+                            <button onclick="showOutput('transcription')" class="output-tab active px-3 py-2 text-sm rounded-lg bg-primary text-white">
+                                Transcription
+                            </button>
+                            <button onclick="showOutput('summary')" class="output-tab px-3 py-2 text-sm rounded-lg bg-gray-200 text-text-secondary">
+                                Summary
+                            </button>
+                            <button onclick="showOutput('code')" class="output-tab px-3 py-2 text-sm rounded-lg bg-gray-200 text-text-secondary">
+                                Code
+                            </button>
+                        </div>
+
+                        <!-- Output Display -->
+                        <div id="output-display" class="bg-white rounded-lg p-4 min-h-64 border">
+                            <div id="transcription-output">
+                                <h4 class="font-outfit font-semibold mb-3">Meeting Notes - Project Alpha</h4>
+                                <div class="space-y-2 text-sm text-text-secondary">
+                                    <p><strong>Date:</strong> December 12, 2025</p>
+                                    <p><strong>Attendees:</strong> Sarah Chen, Mike Rodriguez, Jennifer Kim</p>
+                                    <p><strong>Key Discussion Points:</strong></p>
+                                    <ul class="list-disc list-inside ml-4 space-y-1">
+                                        <li>Project timeline has been adjusted to accommodate additional testing phase</li>
+                                        <li>Budget allocation approved for Q1 2026 with focus on user experience improvements</li>
+                                        <li>Marketing campaign strategy needs refinement based on user feedback</li>
+                                        <li>Technical architecture review scheduled for next week</li>
+                                    </ul>
+                                    <p><strong>Action Items:</strong></p>
+                                    <ul class="list-disc list-inside ml-4 space-y-1">
+                                        <li>Sarah: Complete design mockups by December 20th</li>
+                                        <li>Mike: Set up testing environment and user feedback system</li>
+                                        <li>Jennifer: Coordinate with marketing team for campaign updates</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quality Metrics -->
+                        <div class="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
+                            <div>
+                                <div class="font-outfit font-bold text-primary">80%</div>
+                                <div class="text-text-muted">Accuracy</div>
+                            </div>
+                            <div>
+                                <div class="font-outfit font-bold text-secondary">3.2s</div>
+                                <div class="text-text-muted">Process Time</div>
+                            </div>
+                            <div>
+                                <div class="font-outfit font-bold text-accent">4</div>
+                                <div class="text-text-muted">Formats</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-surface">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-outfit font-bold text-text-primary mb-4">
+                    Frequently Asked Questions
+                </h2>
+                <p class="text-xl text-text-secondary">
+                    Common questions about how Skribb AI works
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="card p-6">
+                    <button class="faq-toggle w-full text-left flex justify-between items-center" onclick="toggleFAQ(1)">
+                        <h3 class="font-outfit font-semibold text-lg">How accurate is the handwriting recognition?</h3>
+                        <svg class="w-5 h-5 text-text-secondary transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="faq-1" class="faq-content hidden mt-4 text-text-secondary">
+                        <p>The AI achieves upto 80%+ accuracy on most handwriting styles. The system is trained on millions of handwriting samples and continuously improves. For best results, ensure good lighting and clear photos. Even with messy handwriting, our context-aware AI can often understand and correct obvious errors.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="card p-6">
+                    <button class="faq-toggle w-full text-left flex justify-between items-center" onclick="toggleFAQ(2)">
+                        <h3 class="font-outfit font-semibold text-lg">What happens to my notes after processing?</h3>
+                        <svg class="w-5 h-5 text-text-secondary transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="faq-2" class="faq-content hidden mt-4 text-text-secondary">
+                        <p>Your privacy is our priority. Images are processed securely in the cloud and automatically deleted within 24 hours. We never store your personal notes permanently. All processing is encrypted, and we comply with GDPR and other privacy regulations.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="card p-6">
+                    <button class="faq-toggle w-full text-left flex justify-between items-center" onclick="toggleFAQ(3)">
+                        <h3 class="font-outfit font-semibold text-lg">Can it recognize different languages?</h3>
+                        <svg class="w-5 h-5 text-text-secondary transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="faq-3" class="faq-content hidden mt-4 text-text-secondary">
+                        <p>Yes! It supports over 80 languages including English, Spanish, French, German, Chinese, Japanese, and many more. The AI automatically detects the language and applies appropriate recognition models. Mixed-language documents are also supported.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="card p-6">
+                    <button class="faq-toggle w-full text-left flex justify-between items-center" onclick="toggleFAQ(4)">
+                        <h3 class="font-outfit font-semibold text-lg">How long does processing take?</h3>
+                        <svg class="w-5 h-5 text-text-secondary transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="faq-4" class="faq-content hidden mt-4 text-text-secondary">
+                        <p>Processing is lightning-fast! Single pages typically take 2-5 seconds, while multi-page documents take 10-15 seconds. The exact time depends on image quality, handwriting complexity, and current server load. You'll see real-time progress updates during processing.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="card p-6">
+                    <button class="faq-toggle w-full text-left flex justify-between items-center" onclick="toggleFAQ(5)">
+                        <h3 class="font-outfit font-semibold text-lg">What file formats can I upload?</h3>
+                        <svg class="w-5 h-5 text-text-secondary transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="faq-5" class="faq-content hidden mt-4 text-text-secondary">
+                        <p>We support all common image formats including JPG, PNG, HEIC, WebP, and PDF files. Maximum file size is 15MB per image. For best results, use high-resolution images with good contrast between text and background.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Metrics -->
+    <section id="metrics" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-outfit font-bold text-text-primary mb-4">
+                    Proven Results
+                </h2>
+                <p class="text-xl text-text-secondary">
+                    Real performance metrics from millions of processed notes
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Metric 1 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-outfit font-bold text-primary mb-2">80%</div>
+                    <div class="text-text-secondary">Average Accuracy Rate</div>
+                </div>
+
+                <!-- Metric 2 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-outfit font-bold text-secondary mb-2">2.8s</div>
+                    <div class="text-text-secondary">Average Processing Time</div>
+                </div>
+
+                <!-- Metric 3 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-outfit font-bold text-accent mb-2">5.2hrs</div>
+                    <div class="text-text-secondary">Average Time Saved/Week</div>
+                </div>
+            </div>
+
+            <!-- Security Badges -->
+            <div class="mt-16 text-center">
+                <h3 class="font-outfit font-semibold text-lg mb-6 text-text-primary">Trusted & Secure</h3>
+                <div class="flex flex-wrap justify-center items-center gap-8 opacity-60">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="font-outfit font-medium text-text-secondary">SSL Encrypted</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="font-outfit font-medium text-text-secondary">GDPR Compliant</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="font-outfit font-medium text-text-secondary">Privacy Protected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="final-cta" class="py-20 bg-gradient-to-br from-primary to-secondary text-white relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-32 h-32 border border-white rounded-full"></div>
+            <div class="absolute bottom-10 right-10 w-24 h-24 border border-white rounded-lg rotate-45"></div>
+            <div class="absolute top-1/2 left-1/4 w-16 h-16 border border-white rounded-full"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <h2 class="text-3xl md:text-5xl font-outfit font-bold mb-6">
+                Ready to Transform Your Notes?
+            </h2>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">
+                Experience the magic of AI-powered note transformation. Start being productive today.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="get-started.html" class="bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-lg font-outfit font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Start Free Trial
+                </a>
+                <a href="get-started.html" class="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-lg font-outfit font-semibold text-lg transition-all duration-300">
+                    Try Demo Now
+                </a>
+            </div>
+            
+            <p class="text-sm opacity-75 mt-6">
+                No credit card required • Free • Cancel anytime
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#footerGradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0066FF"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="text-xl font-outfit font-bold ml-3">Skribb AI</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Transform your handwritten notes into polished digital content with the power of AI. Never waste time retyping again.
+                    </p>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h3 class="font-outfit font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="features-hub.html" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="how-it-works.html" class="text-primary hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="get-started.html" class="text-gray-400 hover:text-white transition-colors">Sign Up and Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div>
+                    <h3 class="font-outfit font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="./Legal/support.html" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="./Legal/privacy-policy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="./Legal/terms-of-service.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Skribb AI. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Capture Demo Functions
+        function showCaptureDemo(type) {
+            const demoArea = document.getElementById('capture-demo');
+            
+            if (type === 'camera') {
+                demoArea.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="font-outfit font-semibold mb-2">Camera Capture</h4>
+                        <p class="text-sm text-text-secondary">Point your camera at handwritten notes and capture instantly</p>
+                    </div>
+                `;
+            } else if (type === 'upload') {
+                demoArea.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h4 class="font-outfit font-semibold mb-2">File Upload</h4>
+                        <p class="text-sm text-text-secondary">Drag and drop images or browse files from your device</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Output Display Functions
+        function showOutput(type) {
+            // Update tab styles
+            document.querySelectorAll('.output-tab').forEach(tab => {
+                tab.classList.remove('bg-primary', 'text-white');
+                tab.classList.add('bg-gray-200', 'text-text-secondary');
+            });
+            event.target.classList.remove('bg-gray-200', 'text-text-secondary');
+            event.target.classList.add('bg-primary', 'text-white');
+
+            const outputDisplay = document.getElementById('output-display');
+            
+            if (type === 'transcription') {
+                outputDisplay.innerHTML = `
+                    <div id="transcription-output">
+                        <h4 class="font-outfit font-semibold mb-3">Meeting Notes - Project Alpha</h4>
+                        <div class="space-y-2 text-sm text-text-secondary">
+                            <p><strong>Date:</strong> December 12, 2025</p>
+                            <p><strong>Attendees:</strong> Sarah Chen, Mike Rodriguez, Jennifer Kim</p>
+                            <p><strong>Key Discussion Points:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>Project timeline has been adjusted to accommodate additional testing phase</li>
+                                <li>Budget allocation approved for Q1 2026 with focus on user experience improvements</li>
+                                <li>Marketing campaign strategy needs refinement based on user feedback</li>
+                                <li>Technical architecture review scheduled for next week</li>
+                            </ul>
+                            <p><strong>Action Items:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>Sarah: Complete design mockups by December 20th</li>
+                                <li>Mike: Set up testing environment and user feedback system</li>
+                                <li>Jennifer: Coordinate with marketing team for campaign updates</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'summary') {
+                outputDisplay.innerHTML = `
+                    <div>
+                        <h4 class="font-outfit font-semibold mb-3">Smart Summary</h4>
+                        <div class="space-y-3 text-sm text-text-secondary">
+                            <div class="p-3 bg-primary-50 rounded-lg">
+                                <h5 class="font-medium text-primary mb-2">Key Decisions</h5>
+                                <ul class="space-y-1">
+                                    <li>• Timeline adjusted for additional testing</li>
+                                    <li>• Q1 2026 budget approved</li>
+                                    <li>• Marketing strategy needs refinement</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-secondary-50 rounded-lg">
+                                <h5 class="font-medium text-secondary mb-2">Action Items</h5>
+                                <ul class="space-y-1">
+                                    <li>• Sarah: Design mockups (Dec 20)</li>
+                                    <li>• Mike: Testing environment setup</li>
+                                    <li>• Jennifer: Marketing coordination</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-accent-50 rounded-lg">
+                                <h5 class="font-medium text-accent mb-2">Next Steps</h5>
+                                <p>Technical architecture review scheduled for next week</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'code') {
+                outputDisplay.innerHTML = `
+                    <div>
+                        <h4 class="font-outfit font-semibold mb-3">Code Recognition</h4>
+                        <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono">
+                            <div class="text-green-400 mb-2">// JavaScript Function</div>
+                            <div class="text-blue-400">function</div> <div class="text-yellow-400">calculateSum</div><div class="text-white">(</div><div class="text-orange-400">a</div><div class="text-white">, </div><div class="text-orange-400">b</div><div class="text-white">) {</div><br>
+                            <div class="ml-4 text-white">return </div><div class="text-orange-400">a</div><div class="text-white"> + </div><div class="text-orange-400">b</div><div class="text-white">;</div><br>
+                            <div class="text-white">}</div><br><br>
+                            <div class="text-green-400">// Usage Example</div><br>
+                            <div class="text-purple-400">const</div> <div class="text-blue-300">result</div> <div class="text-white">= </div><div class="text-yellow-400">calculateSum</div><div class="text-white">(</div><div class="text-orange-300">5</div><div class="text-white">, </div><div class="text-orange-300">3</div><div class="text-white">);</div><br>
+                            <div class="text-blue-400">console</div><div class="text-white">.</div><div class="text-yellow-400">log</div><div class="text-white">(</div><div class="text-blue-300">result</div><div class="text-white">); </div><div class="text-green-400">// Output: 8</div>
+                        </div>
+                        <div class="mt-3 text-xs text-text-muted">
+                            Language: JavaScript | Syntax highlighting applied | Proper indentation maintained
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // FAQ Toggle Functions
+        function toggleFAQ(index) {
+            const content = document.getElementById(`faq-${index}`);
+            const toggle = content.previousElementSibling.querySelector('svg');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                toggle.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                toggle.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add animation on scroll for cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(card);
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

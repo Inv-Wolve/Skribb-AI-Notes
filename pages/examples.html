@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skribb AI - Examples & Use Cases</title>
+    <meta name="description" content="Explore real-world examples of how Skribb AI transforms handwritten notes into digital content across different industries and use cases." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <style>
+        .examples-hero {
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-secondary-50) 100%);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .examples-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e2e8f0" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .category-nav {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.5rem;
+            box-shadow: var(--shadow-md);
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .category-btn:hover {
+            background: var(--color-primary-50);
+            color: var(--color-primary);
+        }
+        
+        .category-btn.active {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-border-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .example-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--color-border-light);
+            background: linear-gradient(135deg, var(--color-primary-50), var(--color-secondary-50));
+        }
+        
+        .example-category {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+        
+        .example-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .example-description {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .example-content {
+            padding: 1.5rem;
+        }
+        
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .before-after-item {
+            position: relative;
+        }
+        
+        .before-after-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .before-after-label.before {
+            color: var(--color-warning);
+        }
+        
+        .before-after-label.after {
+            color: var(--color-success);
+        }
+        
+        .content-box {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            min-height: 120px;
+            position: relative;
+        }
+        
+        .content-box.handwriting {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-color: var(--color-warning);
+            color: #92400e;
+        }
+        
+        .content-box.digital {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--color-success);
+            color: #065f46;
+        }
+        
+        .content-box.code {
+            background: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            border-color: #334155;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border-light);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .try-button {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .try-button:hover {
+            background: var(--color-primary-700);
+            transform: translateY(-1px);
+        }
+        
+        .testimonial-section {
+            background: linear-gradient(135deg, var(--color-text-primary), #374151);
+            color: white;
+            padding: 4rem 0;
+            margin: 4rem 0;
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .testimonial-role {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            border-radius: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            background: white;
+            color: var(--color-primary);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--color-primary);
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .category-btn {
+                text-align: center;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+    <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fskribbai9526back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background text-text-primary">
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-blur-sm border-b border-border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#gradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0066FF"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <span class="text-xl font-outfit font-bold text-gradient-primary">Skribb AI</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="Homepage.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Home</a>
+                        <a href="Dashboard.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Dashboard</a>
+                        <a href="features-hub.html" class="text-text-secondary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm">Features</a>
+                        <a href="Examples.html" class="text-primary font-medium px-3 py-2 rounded-md text-sm">Examples</a>
+                        <a href="get-started.html" class="btn-primary text-sm px-4 py-2">Get Started</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button class="text-text-secondary hover:text-primary transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="examples-hero">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-outfit font-bold text-gradient-primary mb-6">
+                Real-World Examples
+            </h1>
+            <p class="text-xl md:text-2xl text-text-secondary mb-8 max-w-3xl mx-auto">
+                See how Skribb AI transforms handwritten notes across different industries and use cases
+            </p>
+        </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="category-nav">
+            <button class="category-btn active" onclick="filterExamples('all')">All Examples</button>
+            <button class="category-btn" onclick="filterExamples('student')">Students</button>
+            <button class="category-btn" onclick="filterExamples('business')">Business</button>
+            <button class="category-btn" onclick="filterExamples('developer')">Developers</button>
+            <button class="category-btn" onclick="filterExamples('medical')">Medical</button>
+            <button class="category-btn" onclick="filterExamples('legal')">Legal</button>
+        </div>
+    </div>
+
+    <!-- Examples Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="examples-grid" id="examplesGrid">
+            <!-- Student Example -->
+            <div class="example-card" data-category="student">
+                <div class="example-header">
+                    <div class="example-category">Student</div>
+                    <h3 class="example-title">Lecture Notes to Study Guide</h3>
+                    <p class="example-description">Transform messy lecture notes into organized study materials</p>
+                </div>
+                <div class="example-content">
+                    <div class="before-after">
+                        <div class="before-after-item">
+                            <div class="before-after-label before">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                                Handwritten
+                            </div>
+                            <div class="content-box handwriting">
+                                photosynthesis - plants make food
+                                light reactions in thylakoids
+                                calvin cycle - makes glucose
+                                chlorophyll absorbs light
+                                6CO2 + 6H2O → C6H12O6 + 6O2
+                                (messy handwriting, crossed out words)
+                            </div>
+                        </div>
+                        <div class="before-after-item">
+                            <div class="before-after-label after">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Digital
+                            </div>
+                            <div class="content-box digital">
+                                <strong>Photosynthesis Overview</strong><br/>
+                                • Process where plants produce food<br/>
+                                • Light reactions occur in thylakoids<br/>
+                                • Calvin cycle produces glucose<br/>
+                                • Chlorophyll absorbs light energy<br/>
+                                • Equation: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value">95%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3min</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                        <a href="get-started.html" class="try-button">
+                            Try This Example
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Example -->
+            <div class="example-card" data-category="business">
+                <div class="example-header">
+                    <div class="example-category">Business</div>
+                    <h3 class="example-title">Meeting Notes to Action Items</h3>
+                    <p class="example-description">Convert handwritten meeting notes into actionable summaries</p>
+                </div>
+                <div class="example-content">
+                    <div class="before-after">
+                        <div class="before-after-item">
+                            <div class="before-after-label before">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                                Handwritten
+                            </div>
+                            <div class="content-box handwriting">
+                                Q4 planning mtg
+                                - budget approved 50k
+                                - launch march timeline
+                                - sarah review designs
+                                - mike handle dev
+                                - next mtg friday 2pm
+                            </div>
+                        </div>
+                        <div class="before-after-item">
+                            <div class="before-after-label after">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Digital
+                            </div>
+                            <div class="content-box digital">
+                                <strong>Q4 Planning Meeting Summary</strong><br/>
+                                <strong>Decisions:</strong><br/>
+                                • Budget approved: $50,000<br/>
+                                • Launch timeline: March 2025<br/>
+                                <strong>Action Items:</strong><br/>
+                                • Sarah: Review designs (Due: Next Friday)<br/>
+                                • Mike: Handle development tasks<br/>
+                                <strong>Next Meeting:</strong> Friday 2:00 PM
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5min</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                        <a href="get-started.html" class="try-button">
+                            Try This Example
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Developer Example -->
+            <div class="example-card" data-category="developer">
+                <div class="example-header">
+                    <div class="example-category">Developer</div>
+                    <h3 class="example-title">Whiteboard Code to Clean Code</h3>
+                    <p class="example-description">Extract and format code from whiteboard photos</p>
+                </div>
+                <div class="example-content">
+                    <div class="before-after">
+                        <div class="before-after-item">
+                            <div class="before-after-label before">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                                Handwritten
+                            </div>
+                            <div class="content-box handwriting">
+                                function calculateSum(a,b){
+                                return a+b
+                                }
+                                
+                                let result = calculateSum(5,3)
+                                console.log(result)
+                            </div>
+                        </div>
+                        <div class="before-after-item">
+                            <div class="before-after-label after">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Digital
+                            </div>
+                            <div class="content-box code">
+                                function calculateSum(a, b) {<br/>
+                                &nbsp;&nbsp;return a + b;<br/>
+                                }<br/>
+                                <br/>
+                                const result = calculateSum(5, 3);<br/>
+                                console.log(result); // Output: 8
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value">88%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">10min</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                        <a href="get-started.html" class="try-button">
+                            Try This Example
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Example -->
+            <div class="example-card" data-category="medical">
+                <div class="example-header">
+                    <div class="example-category">Medical</div>
+                    <h3 class="example-title">Patient Notes to Records</h3>
+                    <p class="example-description">Digitize handwritten patient notes for electronic health records</p>
+                </div>
+                <div class="example-content">
+                    <div class="before-after">
+                        <div class="before-after-item">
+                            <div class="before-after-label before">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                                Handwritten
+                            </div>
+                            <div class="content-box handwriting">
+                                Patient: J. Smith
+                                Chief complaint: headache 3 days
+                                BP 120/80, temp 98.6F
+                                No fever, mild nausea
+                                Rx: ibuprofen 400mg TID
+                                Follow up 1 week
+                            </div>
+                        </div>
+                        <div class="before-after-item">
+                            <div class="before-after-label after">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Digital
+                            </div>
+                            <div class="content-box digital">
+                                <strong>Patient:</strong> J. Smith<br/>
+                                <strong>Chief Complaint:</strong> Headache (3 days duration)<br/>
+                                <strong>Vital Signs:</strong><br/>
+                                • Blood Pressure: 120/80 mmHg<br/>
+                                • Temperature: 98.6°F<br/>
+                                <strong>Symptoms:</strong> No fever, mild nausea<br/>
+                                <strong>Treatment:</strong> Ibuprofen 400mg TID<br/>
+                                <strong>Follow-up:</strong> 1 week
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value">96%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">7min</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                        <a href="get-started.html" class="try-button">
+                            Try This Example
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Example -->
+            <div class="example-card" data-category="legal">
+                <div class="example-header">
+                    <div class="example-category">Legal</div>
+                    <h3 class="example-title">Case Notes to Brief</h3>
+                    <p class="example-description">Transform handwritten case notes into professional legal briefs</p>
+                </div>
+                <div class="example-content">
+                    <div class="before-after">
+                        <div class="before-after-item">
+                            <div class="before-after-label before">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                                Handwritten
+                            </div>
+                            <div class="content-box handwriting">
+                                Smith v. Jones case
+                                Contract dispute
+                                Breach occurred Jan 15
+                                Damages $50k
+                                Precedent: Brown v. White
+                                File motion by Friday
+                            </div>
+                        </div>
+                        <div class="before-after-item">
+                            <div class="before-after-label after">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Digital
+                            </div>
+                            <div class="content-box digital">
+                                <strong>Case:</strong> Smith v. Jones<br/>
+                                <strong>Matter:</strong> Contract Dispute<br/>
+                                <strong>Key Facts:</strong><br/>
+                                • Breach of contract occurred: January 15, 2025<br/>
+                                • Claimed damages: $50,000<br/>
+                                <strong>Legal Precedent:</strong> Brown v. White<br/>
+                                <strong>Action Required:</strong> File motion by Friday<br/>
+                                <strong>Next Steps:</strong> Prepare supporting documentation
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value">94%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">12min</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                        <a href="get-started.html" class="try-button">
+                            Try This Example
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="cta-section">
+            <h2>Ready to Transform Your Notes?</h2>
+            <p>Join thousands of professionals who've revolutionized their workflow with Skribb AI</p>
+            <div class="cta-buttons">
+                <a href="get-started.html" class="cta-button">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    Start Noting
+                </a>
+                <a href="features-hub.html" class="cta-button secondary">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    View All Features
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4C6.89543 4 6 4.89543 6 6V26C6 27.1046 6.89543 28 8 28H24C25.1046 28 26 27.1046 26 26V6C26 4.89543 25.1046 4 24 4H8Z" fill="currentColor" opacity="0.1"/>
+                            <path d="M10 8H22M10 12H20M10 16H18M10 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="24" cy="8" r="4" fill="url(#footerGradient)" stroke="white" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0066FF"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="text-xl font-outfit font-bold ml-3">Skribb AI</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Transform your handwritten notes into polished digital content with the power of AI. Never waste time retyping again.
+                    </p>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h3 class="font-outfit font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="features-hub.html" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="how-it-works.html" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="get-started.html" class="text-gray-400 hover:text-white transition-colors">Sign Up and Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div>
+                    <h3 class="font-outfit font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="./Legal/support.html" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="./Legal/privacy-policy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="./Legal/terms-of-service.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Skribb AI. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Category filtering functionality
+        function filterExamples(category) {
+            const cards = document.querySelectorAll('.example-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.5s ease-out';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Smooth scroll for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation on scroll for cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all example cards
+            document.querySelectorAll('.example-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
