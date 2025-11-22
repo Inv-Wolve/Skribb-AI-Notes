@@ -24,9 +24,33 @@ Skribb AI is a note transformation platform that combines OCR capabilities, AI-p
 
 ### Installation
 1. Clone the repository
-```bash
+
 git clone <repository_url>
 cd skribb-ai
+
+
+2. Install dependencies for both Node.js and Python:
+
+`npm install`
+`pip install fastapi uvicorn paddleocr pillow numpy`
+
+3. Create a `.env` file in the root directory and set the required environment variables:
+
+```env
+AI_API_KEY=<your_openrouter_api_key>
+FRONTEND_URL=<allowed_origin>
+NODE_ENV=development
+PORT=1234
+```
+
+4. Start the Python OCR server:
+`python OCR_Server.py`
+
+5. Start the Node.js server:
+`node server.js`
+
+
+6. Open your browser and access the frontend at `http://localhost:1234`.
 ```
 
 
