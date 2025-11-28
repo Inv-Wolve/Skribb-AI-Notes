@@ -119,154 +119,134 @@
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <!-- Account Form -->
                     <div class="flex justify-center items-center min-h-screen bg-background px-4">
-                    <div class="card w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-6 sm:p-8">
-                        <h2 class="text-xl sm:text-2xl font-outfit font-semibold mb-6 text-center sm:text-left">
-                        Create Your Account
-                        </h2>
+                        <!-- Signup View -->
+                        <div id="signup-view" class="card w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-6 sm:p-8">
+                            <h2 class="text-xl sm:text-2xl font-outfit font-semibold mb-6 text-center sm:text-left">
+                                Create Your Account
+                            </h2>
 
-                        <!-- Social Login Options -->
-                        <div class="space-y-3 mb-6">
-                        <button class="w-full flex items-center justify-center px-4 py-3 border border-border rounded-lg hover:bg-surface transition-colors">
-                            <img
-                            src="../resources/images/favpng_4aa6c18ca7b97bc2a4ac8598eddea86d.png"
-                            alt="Google"
-                            class="w-5 h-5 mr-3"
-                            loading="lazy"
-                            onerror="this.src='https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;"
-                            />
-                            <span class="font-medium">Continue with Google</span>
-                        </button>
-                        </div>
-
-                        <!-- Divider -->
-                        <div class="relative mb-6">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-border"></div>
-                        </div>
-                        <div class="relative flex justify-center text-sm">
-                            <span class="px-2 bg-background text-text-muted">or continue with email</span>
-                        </div>
-                        </div>
-
-                        <!-- Email Form -->
-                        <form id="signup-form" class="space-y-4">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-text-primary mb-2">Your Name</label>
-                            <input type="text" id="name" name="username" required class="input-field w-full" placeholder="Your name here!" />
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
-                            <input type="email" id="email" name="email" required class="input-field w-full" placeholder="your.email@example.com" />
-                        </div>
-                        <div>
-                            <label for="birthday" class="block text-sm font-medium text-text-primary mb-2">Birthday</label>
-                            <input
-                                type="text"
-                                id="birthday"
-                                name="birthday"
-                                placeholder="Select your birthday"
-                                class="input-field w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                            />
-                        </div>
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-text-primary mb-2">Password</label>
-                            <input type="password" id="password" name="password" required class="input-field w-full" placeholder="Create a secure password" />
-                        </div>
-                        <!-- Alpine.js CDN required -->
-                        <script src="//unpkg.com/alpinejs" defer></script>
-
-                        <div x-data="dropdown()" class="w-full relative">
-                        <div @click="toggle()" class="cursor-pointer w-full border border-border rounded-lg px-4 py-3 bg-white flex justify-between items-center">
-                            <span x-text="selected || 'Select your role'"></span>
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
-
-                        <div x-show="open" @click.away="close()" class="absolute z-10 mt-1 w-full bg-white border border-border rounded-lg shadow-lg max-h-60 overflow-auto">
-                            <input type="text" x-model="search" placeholder="Search..." class="w-full px-4 py-2 border-b border-border focus:outline-none" />
-
-                            <template x-for="option in filteredOptions()" :key="option">
-                            <div @click="select(option)" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer" x-text="option"></div>
-                            </template>
-                        </div>
-                        </div>
-
-                        <script>
-                        function dropdown() {
-                            return {
-                            open: false,
-                            search: '',
-                            selected: '',
-                            options: [
-                                'Student',
-                                'Business Professional',
-                                'Developer',
-                                'Creative Professional',
-                                'Other',
-                                'Teacher',
-                                'Manager',
-                                'Entrepreneur',
-                                'Designer',
-                                'Engineer',
-                                'Freelancer'
-                            ],
-                            toggle() { this.open = !this.open },
-                            close() { this.open = false },
-                            select(option) { this.selected = option; this.open = false; },
-                            filteredOptions() {
-                                return this.options.filter(o => o.toLowerCase().includes(this.search.toLowerCase()));
-                            }
-                            }
-                        }
-                        </script>
-
-                        <div class="flex items-start sm:items-center">
-                            <input type="checkbox" id="terms" name="terms" required class="h-4 w-4 text-primary focus:ring-primary border-border rounded mt-1 sm:mt-0" />
-                            <label for="terms" class="ml-2 block text-sm text-text-secondary">
-                            I agree to the
-                            <a href="./Legal/Terms Of Service.html" class="text-primary hover:underline">Terms of Service</a> and
-                            <a href="./Legal/Privacy Policy.html" class="text-primary hover:underline">Privacy Policy</a>
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn-primary w-full text-base sm:text-lg py-3 sm:py-4">
-                            Create Account & Continue
-                        </button>
-                        </form>
-
-                        <p class="text-center text-sm text-text-muted mt-6">
-                        Already have an account?
-                        <a href="javascript:void(0)" onclick="switchToSignIn()" class="text-primary hover:underline font-medium">Sign in here</a>
-                        </p>
-                    </div>
-                    </div>
-
-                    <!-- Sign In Form (Initially Hidden) -->
-                    <div id="signin-form" class="auth-form">
-                        <div class="form-header">
-                            <h2>Welcome Back</h2>
-                            <p>Sign in to your Skribb AI account</p>
-                        </div>
-                        
-                        <form id="signinForm" onsubmit="handleSignIn(event)">
-                            <div class="form-group">
-                                <label for="signin-email">Email Address</label>
-                                <input type="email" id="signin-email" name="email" required autocomplete="email">
+                            <!-- Social Login Options -->
+                            <div class="space-y-3 mb-6">
+                                <button class="w-full flex items-center justify-center px-4 py-3 border border-border rounded-lg hover:bg-surface transition-colors">
+                                    <img src="../resources/images/favpng_4aa6c18ca7b97bc2a4ac8598eddea86d.png" alt="Google" class="w-5 h-5 mr-3" loading="lazy" onerror="this.src='https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                                    <span class="font-medium">Continue with Google</span>
+                                </button>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="signin-password">Password</label>
-                                <input type="password" id="signin-password" name="password" required autocomplete="current-password">
+
+                            <!-- Divider -->
+                            <div class="relative mb-6">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-border"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-background text-text-muted">or continue with email</span>
+                                </div>
                             </div>
-                            
-                            <button type="submit" class="btn-primary">
-                                Sign In
-                            </button>
-                            
-                            <p class="text-sm text-text-muted text-center">
-                                Don't have an account? <a href="#" onclick="switchToSignUp()" class="text-primary hover:text-primary-700 font-medium">Create one here</a>
+
+                            <!-- Email Form -->
+                            <form id="signup-form" class="space-y-4">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-text-primary mb-2">Your Name</label>
+                                    <input type="text" id="name" name="username" required class="input-field w-full" placeholder="Your name here!" />
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                    <input type="email" id="email" name="email" required class="input-field w-full" placeholder="your.email@example.com" />
+                                </div>
+                                <div>
+                                    <label for="birthday" class="block text-sm font-medium text-text-primary mb-2">Birthday</label>
+                                    <input type="text" id="birthday" name="birthday" placeholder="Select your birthday" class="input-field w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" />
+                                </div>
+                                <div>
+                                    <label for="password" class="block text-sm font-medium text-text-primary mb-2">Password</label>
+                                    <input type="password" id="password" name="password" required class="input-field w-full" placeholder="Create a secure password" />
+                                </div>
+                                <!-- Alpine.js CDN required -->
+                                <script src="//unpkg.com/alpinejs" defer></script>
+
+                                <div x-data="dropdown()" class="w-full relative">
+                                    <div @click="toggle()" class="cursor-pointer w-full border border-border rounded-lg px-4 py-3 bg-white flex justify-between items-center">
+                                        <span x-text="selected || 'Select your role'"></span>
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+
+                                    <div x-show="open" @click.away="close()" class="absolute z-10 mt-1 w-full bg-white border border-border rounded-lg shadow-lg max-h-60 overflow-auto">
+                                        <input type="text" x-model="search" placeholder="Search..." class="w-full px-4 py-2 border-b border-border focus:outline-none" />
+
+                                        <template x-for="option in filteredOptions()" :key="option">
+                                            <div @click="select(option)" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer" x-text="option"></div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    function dropdown() {
+                                        return {
+                                            open: false,
+                                            search: '',
+                                            selected: '',
+                                            options: [
+                                                'Student', 'Business Professional', 'Developer', 'Creative Professional',
+                                                'Other', 'Teacher', 'Manager', 'Entrepreneur', 'Designer', 'Engineer', 'Freelancer'
+                                            ],
+                                            toggle() { this.open = !this.open },
+                                            close() { this.open = false },
+                                            select(option) { this.selected = option; this.open = false; },
+                                            filteredOptions() {
+                                                return this.options.filter(o => o.toLowerCase().includes(this.search.toLowerCase()));
+                                            }
+                                        }
+                                    }
+                                </script>
+
+                                <div class="flex items-start sm:items-center">
+                                    <input type="checkbox" id="terms" name="terms" required class="h-4 w-4 text-primary focus:ring-primary border-border rounded mt-1 sm:mt-0" />
+                                    <label for="terms" class="ml-2 block text-sm text-text-secondary">
+                                        I agree to the
+                                        <a href="./Legal/Terms Of Service.html" class="text-primary hover:underline">Terms of Service</a> and
+                                        <a href="./Legal/Privacy Policy.html" class="text-primary hover:underline">Privacy Policy</a>
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="btn-primary w-full text-base sm:text-lg py-3 sm:py-4">
+                                    Create Account & Continue
+                                </button>
+                            </form>
+
+                            <p class="text-center text-sm text-text-muted mt-6">
+                                Already have an account?
+                                <a href="#" id="link-to-signin" class="text-primary hover:underline font-medium">Sign in here</a>
                             </p>
+                        </div>
+
+                        <!-- Sign In View (Initially Hidden) -->
+                        <div id="signin-view" class="card w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-6 sm:p-8 hidden">
+                            <div class="form-header mb-6">
+                                <h2 class="text-xl sm:text-2xl font-outfit font-semibold text-center sm:text-left">Welcome Back</h2>
+                                <p class="text-text-secondary text-center sm:text-left">Sign in to your Skribb AI account</p>
+                            </div>
+                            
+                            <form id="signin-form" class="space-y-4">
+                                <div>
+                                    <label for="signin-email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                    <input type="email" id="signin-email" name="email" required autocomplete="email" class="input-field w-full" placeholder="your.email@example.com">
+                                </div>
+                                
+                                <div>
+                                    <label for="signin-password" class="block text-sm font-medium text-text-primary mb-2">Password</label>
+                                    <input type="password" id="signin-password" name="password" required autocomplete="current-password" class="input-field w-full" placeholder="Enter your password">
+                                </div>
+                                
+                                <button type="submit" class="btn-primary w-full text-base sm:text-lg py-3 sm:py-4">
+                                    Sign In
+                                </button>
+                                
+                                <p class="text-sm text-text-muted text-center mt-6">
+                                    Don't have an account? <a href="#" id="link-to-signup" class="text-primary hover:text-primary-700 font-medium">Create one here</a>
+                                </p>
+                            </form>
                         </div>
                     </div>
 
@@ -316,7 +296,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Step 2: Upload Interface (Hidden initially) -->
             <section id="upload-interface" class="mb-16 hidden">
                 <div class="text-center mb-12">
@@ -702,7 +681,6 @@
             </section>
         </div>
     </main>
-
     <!-- Footer -->
     <footer class="bg-text-primary text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -775,183 +753,460 @@
     </footer>
 
     <script>
-        // Form switching functionality
-        function switchToSignIn() {
-            document.getElementById('signup-form').style.display = 'none';
-            document.getElementById('signin-form').style.display = 'block';
-            
-            // Update URL hash for better UX
-            window.location.hash = 'signin';
+    // Auth Manager Class
+    class AuthManager {
+        constructor() {
+            this.baseURL = 'http://localhost:5500'; // Updated to match app.js routes
+            this.tokenKey = 'skribb_token';
+            this.userKey = 'skribb_user';
         }
-        
-        function switchToSignUp() {
-            document.getElementById('signin-form').style.display = 'none';
-            document.getElementById('signup-form').style.display = 'block';
-            
-            // Update URL hash for better UX
-            window.location.hash = 'signup';
-        }
-        
-        // Handle sign-in form submission
-        async function handleSignIn(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Signing In...
-            `;
-            submitButton.disabled = true;
-            
-            try {
-                const formData = new FormData(form);
-                const email = formData.get('email');
-                const password = formData.get('password');
-                
-                // Use the auth manager to sign in
-                const result = await window.authManager.login(email, password);
-                
-                if (result.success) {
-                    // Show success message
-                    showMessage('Sign in successful! Redirecting to dashboard...', 'success');
-                    
-                    // Redirect to dashboard after a short delay
-                    setTimeout(() => {
-                        window.location.href = 'Dashboard.html';
-                    }, 1500);
-                } else {
-                    showMessage(result.message || 'Sign in failed. Please try again.', 'error');
-                }
-            } catch (error) {
-                console.error('Sign in error:', error);
-                showMessage('An error occurred during sign in. Please try again.', 'error');
-            } finally {
-                // Reset button
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
+
+        // Store token
+        setToken(token) {
+            if (token) {
+                localStorage.setItem(this.tokenKey, token);
+            } else {
+                localStorage.removeItem(this.tokenKey);
             }
         }
-        
-        // Handle sign-up form submission (existing functionality enhanced)
-        async function handleSignUp(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Creating Account...
-            `;
-            submitButton.disabled = true;
-            
+
+        // Get stored token
+        getToken() {
+            return localStorage.getItem(this.tokenKey);
+        }
+
+        // Get stored user data
+        getUser() {
+            const userData = localStorage.getItem(this.userKey);
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        // Store user data
+        setUser(user) {
+            if (user) {
+                localStorage.setItem(this.userKey, JSON.stringify(user));
+            } else {
+                localStorage.removeItem(this.userKey);
+            }
+        }
+
+        // Clear all auth data
+        clearAuth() {
+            localStorage.removeItem(this.tokenKey);
+            localStorage.removeItem(this.userKey);
+        }
+
+        // Check if user is logged in
+        isLoggedIn() {
+            return !!(this.getToken() && this.getUser());
+        }
+
+        // Make authenticated API request
+        async makeAuthenticatedRequest(endpoint, options = {}) {
+            const token = this.getToken();
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(token && { 'Authorization': `Bearer ${token}` })
+                }
+            };
+
+            const mergedOptions = {
+                ...defaultOptions,
+                ...options,
+                headers: {
+                    ...defaultOptions.headers,
+                    ...options.headers
+                }
+            };
+
             try {
-                const formData = new FormData(form);
-                const username = formData.get('username');
-                const email = formData.get('email');
-                const password = formData.get('password');
-                
-                // Make signup request
-                const response = await fetch('http://localhost:1234/signup', {
+                const response = await fetch(`${this.baseURL}${endpoint}`, mergedOptions);
+                const data = await response.json();
+
+                // If request failed due to auth, redirect to login
+                if (data.requiresAuth || (response.status === 401 && data.message === 'Authentication required')) {
+                    this.redirectToLogin();
+                    return null;
+                }
+
+                return data;
+            } catch (error) {
+                console.error('API request failed:', error);
+                throw error;
+            }
+        }
+
+        // Verify current session
+        async verifySession() {
+            const token = this.getToken();
+            if (!token) {
+                return false;
+            }
+
+            try {
+                const response = await fetch(`${this.baseURL}/verify-session`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.valid) {
+                    // Update stored user data with fresh session data
+                    this.setUser(data.user);
+                    return true;
+                } else {
+                    // Invalid session, clear auth data
+                    this.clearAuth();
+                    return false;
+                }
+            } catch (error) {
+                console.error('Session verification failed:', error);
+                this.clearAuth();
+                return false;
+            }
+        }
+
+        // Get current user data from server
+        async getCurrentUser() {
+            try {
+                const data = await this.makeAuthenticatedRequest('/me');
+                if (data && data.success) {
+                    this.setUser(data.user);
+                    return data.user;
+                }
+                return null;
+            } catch (error) {
+                console.error('Failed to get current user:', error);
+                return null;
+            }
+        }
+
+        // Signup user
+        async signup(username, email, password) {
+            try {
+                const response = await fetch(`${this.baseURL}/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ username, email, password })
                 });
+
+                const data = await response.json();
                 
-                const result = await response.json();
-                
-                if (result.success) {
-                    showMessage('Account created successfully! You can now sign in.', 'success');
-                    
-                    // Switch to sign-in form after successful signup
-                    setTimeout(() => {
-                        switchToSignIn();
-                        // Pre-fill email in sign-in form
-                        document.getElementById('signin-email').value = email;
-                    }, 2000);
+                if (data.success) {
+                    return { success: true, message: data.message };
                 } else {
-                    showMessage(result.message || 'Account creation failed. Please try again.', 'error');
+                    return { success: false, message: data.message };
                 }
             } catch (error) {
-                console.error('Sign up error:', error);
-                showMessage('An error occurred during account creation. Please try again.', 'error');
-            } finally {
-                // Reset button
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
+                console.error('Signup failed:', error);
+                return { success: false, message: 'Signup request failed' };
             }
         }
-        
-        // Message display function
-        function showMessage(message, type = 'info') {
-            // Remove existing messages
-            const existingMessages = document.querySelectorAll('.auth-message');
-            existingMessages.forEach(msg => msg.remove());
+
+        // Login user
+        async login(email, password) {
+            try {
+                const response = await fetch(`${this.baseURL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.token) {
+                    this.setToken(data.token);
+                    this.setUser(data.user);
+                    return { success: true, user: data.user };
+                } else {
+                    return { success: false, message: data.message };
+                }
+            } catch (error) {
+                console.error('Login failed:', error);
+                return { success: false, message: 'Login request failed' };
+            }
+        }
+
+        // Google Login
+        async googleLogin(credential, payload) {
+            try {
+                const response = await fetch(`${this.baseURL}/google-login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        credential,
+                        email: payload.email,
+                        name: payload.name,
+                        picture: payload.picture,
+                        googleId: payload.sub
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.token) {
+                    this.setToken(data.token);
+                    this.setUser(data.user);
+                    return { success: true, user: data.user };
+                } else {
+                    return { success: false, message: data.message };
+                }
+            } catch (error) {
+                console.error('Google Login failed:', error);
+                return { success: false, message: 'Google Login request failed' };
+            }
+        }
+
+        // Logout user
+        async logout() {
+            const token = this.getToken();
             
-            // Create message element
+            try {
+                // Call server logout endpoint
+                if (token) {
+                    await fetch(`${this.baseURL}/logout`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Logout request failed:', error);
+                // Continue with local logout even if server request fails
+            }
+
+            // Clear local auth data
+            this.clearAuth();
+            
+            // Redirect to login page
+            this.redirectToLogin();
+        }
+
+        // Redirect to login page
+        redirectToLogin() {
+            window.location.href = 'get-started.html#signin';
+        }
+
+        // Initialize auth on page load
+        async init() {
+            // If no token, user needs to login
+            if (!this.isLoggedIn()) {
+                // Check if this page requires authentication
+                if (document.body.dataset.requiresAuth === 'true') {
+                    this.redirectToLogin();
+                }
+                return false;
+            }
+
+            // Verify session with server
+            const isValid = await this.verifySession();
+            
+            if (!isValid) {
+                // Only redirect if page requires auth
+                if (document.body.dataset.requiresAuth === 'true') {
+                    this.redirectToLogin();
+                }
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    // Create global auth manager instance
+    window.authManager = new AuthManager();
+    console.log('AuthManager initialized inline');
+    </script>
+    <script>
+        // Form switching logic
+        function switchToSignIn() {
+            document.getElementById('signup-view').classList.add('hidden');
+            document.getElementById('signin-view').classList.remove('hidden');
+            window.location.hash = 'signin';
+        }
+
+        function switchToSignUp() {
+            document.getElementById('signin-view').classList.add('hidden');
+            document.getElementById('signup-view').classList.remove('hidden');
+            window.location.hash = 'signup';
+        }
+
+        function showMessage(message, type = 'info') {
+            const existingMsg = document.querySelector('.auth-message');
+            if (existingMsg) existingMsg.remove();
+
             const messageDiv = document.createElement('div');
-            messageDiv.className = `auth-message p-4 rounded-lg mb-4 ${
-                type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' :
-                type === 'error' ? 'bg-red-50 text-red-800 border border-red-200' :
-                'bg-blue-50 text-blue-800 border border-blue-200'
+            messageDiv.className = `auth-message p-4 mb-4 rounded-lg text-sm font-medium ${
+                type === 'success' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'
             }`;
             messageDiv.textContent = message;
+
+            const activeForm = document.getElementById('signup-view').classList.contains('hidden') ? 
+                document.getElementById('signin-form') : document.getElementById('signup-form');
             
-            // Insert message at the top of the active form
-            const activeForm = document.getElementById('signup-form').style.display !== 'none' ? 
-                document.getElementById('signup-form') : document.getElementById('signin-form');
-            activeForm.insertBefore(messageDiv, activeForm.firstChild);
-            
-            // Auto-remove success messages after 5 seconds
+            if (activeForm) {
+                activeForm.parentNode.insertBefore(messageDiv, activeForm);
+            }
+
             if (type === 'success') {
                 setTimeout(() => {
                     messageDiv.remove();
                 }, 5000);
             }
         }
-        
-        // Initialize form based on URL hash
+
+        // Auth handlers
+        async function handleSignUp(e) {
+            e.preventDefault();
+            if (!window.authManager) {
+                showMessage('Authentication system not loaded. Please refresh the page.', 'error');
+                return;
+            }
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                // Pass individual arguments as expected by AuthManager.signup
+                const result = await window.authManager.signup(data.username, data.email, data.password);
+                if (result.success) {
+                    showMessage('Account created successfully! Please sign in.', 'success');
+                    switchToSignIn();
+                    const emailInput = document.getElementById('signin-email');
+                    if (emailInput) emailInput.value = data.email;
+                } else {
+                    showMessage(result.error || result.message || 'Signup failed', 'error');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showMessage('An error occurred during signup', 'error');
+            }
+        }
+
+        async function handleSignIn(e) {
+            e.preventDefault();
+            if (!window.authManager) {
+                showMessage('Authentication system not loaded. Please refresh the page.', 'error');
+                return;
+            }
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const result = await window.authManager.login(data.email, data.password);
+                if (result.success) {
+                    showMessage('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    showMessage(result.error || result.message || 'Login failed', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('An error occurred during login', 'error');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            const hash = window.location.hash;
-            if (hash === '#signin') {
+            // Check for authManager
+            if (!window.authManager) {
+                console.error('AuthManager not found on load');
+            }
+
+            // Handle URL hash
+            if (window.location.hash === '#signin') {
                 switchToSignIn();
             } else {
-                // Default to sign-up form
                 switchToSignUp();
             }
+
+            // Link Listeners
+            const linkToSignin = document.getElementById('link-to-signin');
+            if (linkToSignin) {
+                linkToSignin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchToSignIn();
+                });
+            }
+
+            const linkToSignup = document.getElementById('link-to-signup');
+            if (linkToSignup) {
+                linkToSignup.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchToSignUp();
+                });
+            }
+
+            // Auth listeners
+            const signupForm = document.getElementById('signup-form');
+            if (signupForm) {
+                const newSignupForm = signupForm.cloneNode(true);
+                signupForm.parentNode.replaceChild(newSignupForm, signupForm);
+                newSignupForm.addEventListener('submit', handleSignUp);
+            }
+
+            const signinForm = document.getElementById('signin-form');
+            if (signinForm) {
+                const newSigninForm = signinForm.cloneNode(true);
+                signinForm.parentNode.replaceChild(newSigninForm, signinForm);
+                newSigninForm.addEventListener('submit', handleSignIn);
+            }
             
-            // Add form submission handlers
-            document.getElementById('signupForm').addEventListener('submit', handleSignUp);
+            // Initialize progress
+            updateProgress(1);
+
+            // Complete setup button
+            const completeSetupBtn = document.getElementById('complete-setup');
+            if (completeSetupBtn) {
+                completeSetupBtn.addEventListener('click', function() {
+                    document.getElementById('preferences-setup').classList.add('hidden');
+                    document.getElementById('dashboard-preview').classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // Copy text functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.textContent.includes('Copy Text')) {
+                    navigator.clipboard.writeText('Project Meeting Notes\n\nDate: December 12, 2025\nAttendees: Sarah, Mike, Jennifer\n\nKey Discussion Points:\n• Q2 2026 launch timeline confirmed\n• Budget approval received for additional resources\n• User testing phase scheduled for January\n• Marketing campaign kickoff planned for March\n\nAction Items:\n• Sarah: Complete design mockups by December 20\n• Mike: Set up testing environment by January 5\n• Jennifer: Draft marketing strategy by February 1');
+                    
+                    // Show success feedback
+                    const originalText = e.target.innerHTML;
+                    e.target.textContent = 'Copied!';
+                    e.target.classList.add('bg-success');
+                    setTimeout(() => {
+                        e.target.innerHTML = originalText;
+                        e.target.classList.remove('bg-success');
+                    }, 2000);
+                }
+            });
         });
         
-        // Onboarding Flow Management
-        document.addEventListener('DOMContentLoaded', function() {
-            let currentStep = 1;
+        // Helper functions
+        function updateProgress(step) {
             const totalSteps = 3;
-
-            // Step progression
-            function updateProgress(step) {
-                // Update progress indicators
-                for (let i = 1; i <= totalSteps; i++) {
-                    const stepElement = document.getElementById(`step-${i}`);
-                    const progressElement = document.getElementById(`progress-${i}`);
-                    
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepElement = document.getElementById(`step-${i}`);
+                const progressElement = document.getElementById(`progress-${i}`);
+                
+                if (stepElement) {
                     if (i <= step) {
-                        // Active/completed step
                         stepElement.querySelector('.w-8').classList.remove('bg-border', 'text-text-muted');
                         stepElement.querySelector('.w-8').classList.add('bg-primary', 'text-white');
                         stepElement.querySelector('span').classList.remove('text-text-muted');
@@ -962,137 +1217,75 @@
                             progressElement.classList.add('bg-primary');
                         }
                     } else {
-                        // Inactive step
                         stepElement.querySelector('.w-8').classList.remove('bg-primary', 'text-white');
                         stepElement.querySelector('.w-8').classList.add('bg-border', 'text-text-muted');
                         stepElement.querySelector('span').classList.remove('text-primary');
                         stepElement.querySelector('span').classList.add('text-text-muted');
                     }
                 }
+            }
 
-                // Show/hide sections
-                const sections = ['account-creation', 'upload-interface', 'processing-results', 'preferences-setup', 'dashboard-preview'];
-                sections.forEach((sectionId, index) => {
-                    const section = document.getElementById(sectionId);
+            const sections = ['account-creation', 'upload-interface', 'processing-results', 'preferences-setup', 'dashboard-preview'];
+            sections.forEach((sectionId, index) => {
+                const section = document.getElementById(sectionId);
+                if (section) {
                     if (index === step - 1) {
                         section.classList.remove('hidden');
                     } else {
                         section.classList.add('hidden');
                     }
-                });
-            }
-
-            // Account creation form
-            document.getElementById('signup-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Simulate account creation
-                setTimeout(() => {
-                    currentStep = 2;
-                    updateProgress(currentStep);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 1000);
-            });
-
-            // File upload handling
-            const uploadZone = document.getElementById('upload-zone');
-            const fileInput = document.getElementById('file-input');
-
-            uploadZone.addEventListener('click', () => fileInput.click());
-            
-            uploadZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadZone.classList.add('border-primary', 'bg-primary-50');
-            });
-
-            uploadZone.addEventListener('dragleave', () => {
-                uploadZone.classList.remove('border-primary', 'bg-primary-50');
-            });
-
-            uploadZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadZone.classList.remove('border-primary', 'bg-primary-50');
-                handleFileUpload(e.dataTransfer.files[0]);
-            });
-
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files[0]) {
-                    handleFileUpload(e.target.files[0]);
                 }
             });
+        }
 
-            function handleFileUpload(file) {
-                if (file) {
-                    currentStep = 3;
-                    updateProgress(currentStep);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    
-                    // Start processing simulation
-                    simulateProcessing();
-                }
-            }
-
-            // Processing simulation
-            function simulateProcessing() {
-                const tips = [
-                    "Analyzing handwriting patterns and character recognition...",
-                    "Applying advanced OCR algorithms for maximum accuracy...",
-                    "Processing text structure and formatting...",
-                    "Applying grammar corrections and improvements...",
-                    "Finalizing your digital transformation..."
-                ];
-
-                let tipIndex = 0;
-                const tipElement = document.getElementById('processing-tip');
-                
-                const tipInterval = setInterval(() => {
-                    if (tipIndex < tips.length) {
-                        tipElement.textContent = tips[tipIndex];
-                        tipIndex++;
-                    }
-                }, 1500);
-
-                // Complete processing after 8 seconds
-                setTimeout(() => {
-                    clearInterval(tipInterval);
-                    document.getElementById('processing-animation').classList.add('hidden');
-                    document.getElementById('results-display').classList.remove('hidden');
-                    document.getElementById('processing-title').textContent = 'Transformation Complete!';
-                    document.getElementById('processing-subtitle').textContent = 'Your handwritten note has been perfectly digitized with upto 80% accuracy';
-                    
-                    // Show preferences after a moment
-                    setTimeout(() => {
-                        document.getElementById('preferences-setup').classList.remove('hidden');
-                        document.getElementById('processing-results').classList.add('hidden');
-                    }, 3000);
-                }, 8000);
-            }
-
-            // Complete setup
-            document.getElementById('complete-setup').addEventListener('click', function() {
-                document.getElementById('preferences-setup').classList.add('hidden');
-                document.getElementById('dashboard-preview').classList.remove('hidden');
+        function handleFileUpload(file) {
+            if (file) {
+                const currentStep = 3;
+                updateProgress(currentStep);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+                simulateProcessing();
+            }
+        }
 
-            // Copy text functionality
-            document.addEventListener('click', function(e) {
-                if (e.target.textContent.includes('Copy Text')) {
-                    navigator.clipboard.writeText('Project Meeting Notes\n\nDate: December 12, 2025\nAttendees: Sarah, Mike, Jennifer\n\nKey Discussion Points:\n• Q2 2026 launch timeline confirmed\n• Budget approval received for additional resources\n• User testing phase scheduled for January\n• Marketing campaign kickoff planned for March\n\nAction Items:\n• Sarah: Complete design mockups by December 20\n• Mike: Set up testing environment by January 5\n• Jennifer: Draft marketing strategy by February 1');
-                    
-                    // Show success feedback
-                    e.target.textContent = 'Copied!';
-                    e.target.classList.add('bg-success');
-                    setTimeout(() => {
-                        e.target.innerHTML = '<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>Copy Text';
-                        e.target.classList.remove('bg-success');
-                    }, 2000);
+        function simulateProcessing() {
+            const tips = [
+                "Analyzing handwriting patterns and character recognition...",
+                "Applying advanced OCR algorithms for maximum accuracy...",
+                "Processing text structure and formatting...",
+                "Applying grammar corrections and improvements...",
+                "Finalizing your digital transformation..."
+            ];
+
+            let tipIndex = 0;
+            const tipElement = document.getElementById('processing-tip');
+            
+            const tipInterval = setInterval(() => {
+                if (tipElement && tipIndex < tips.length) {
+                    tipElement.textContent = tips[tipIndex];
+                    tipIndex++;
                 }
-            });
+            }, 1500);
 
-            // Initialize first step
-            updateProgress(currentStep);
-        });
+            setTimeout(() => {
+                clearInterval(tipInterval);
+                const anim = document.getElementById('processing-animation');
+                const results = document.getElementById('results-display');
+                const title = document.getElementById('processing-title');
+                const subtitle = document.getElementById('processing-subtitle');
+                
+                if (anim) anim.classList.add('hidden');
+                if (results) results.classList.remove('hidden');
+                if (title) title.textContent = 'Transformation Complete!';
+                if (subtitle) subtitle.textContent = 'Your handwritten note has been perfectly digitized with upto 80% accuracy';
+                
+                setTimeout(() => {
+                    const prefs = document.getElementById('preferences-setup');
+                    const proc = document.getElementById('processing-results');
+                    if (prefs) prefs.classList.remove('hidden');
+                    if (proc) proc.classList.add('hidden');
+                }, 3000);
+            }, 8000);
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>

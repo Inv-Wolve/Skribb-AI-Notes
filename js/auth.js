@@ -1,23 +1,12 @@
-// Client-side authentication utility
-class AuthManager {
-    constructor() {
-        this.baseURL = 'http://localhost:1234';
-        this.tokenKey = 'skribb_auth_token';
-        this.userKey = 'skribb_user_data';
+            localStorage.setItem(this.tokenKey, token);
+        } else {
+            localStorage.removeItem(this.tokenKey);
+        }
     }
 
     // Get stored token
     getToken() {
         return localStorage.getItem(this.tokenKey);
-    }
-
-    // Store token
-    setToken(token) {
-        if (token) {
-            localStorage.setItem(this.tokenKey, token);
-        } else {
-            localStorage.removeItem(this.tokenKey);
-        }
     }
 
     // Get stored user data
@@ -131,6 +120,30 @@ class AuthManager {
         }
     }
 
+    // Signup user
+    async signup(username, email, password) {
+        try {
+            const response = await fetch(`${this.baseURL}/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                return { success: true, message: data.message };
+            } else {
+                return { success: false, message: data.message };
+            }
+        } catch (error) {
+            console.error('Signup failed:', error);
+            return { success: false, message: 'Signup request failed' };
+        }
+    }
+
     // Login user
     async login(email, password) {
         try {
@@ -157,6 +170,38 @@ class AuthManager {
         }
     }
 
+    // Google Login
+    async googleLogin(credential, payload) {
+        try {
+            const response = await fetch(`${this.baseURL}/google-login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    credential,
+                    email: payload.email,
+                    name: payload.name,
+                    picture: payload.picture,
+                    googleId: payload.sub
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success && data.token) {
+                this.setToken(data.token);
+                this.setUser(data.user);
+                return { success: true, user: data.user };
+            } else {
+                return { success: false, message: data.message };
+            }
+        } catch (error) {
+            console.error('Google Login failed:', error);
+            return { success: false, message: 'Google Login request failed' };
+        }
+    }
+
     // Logout user
     async logout() {
         const token = this.getToken();
@@ -179,13 +224,13 @@ class AuthManager {
         // Clear local auth data
         this.clearAuth();
         
-        // Redirect to get started page
+        // Redirect to login page
         this.redirectToLogin();
     }
 
     // Redirect to login page
     redirectToLogin() {
-        window.location.href = 'get-started.html';
+        window.location.href = 'get-started.html#signin';
     }
 
     // Initialize auth on page load
@@ -212,23 +257,6 @@ class AuthManager {
 
         return true;
     }
-
-    // Get user stats/dashboard data
-    async getUserStats() {
-        // This would typically fetch user-specific stats from the server
-        // For now, return mock data based on user info
-        const user = this.getUser();
-        if (!user) return null;
-
-        // Mock stats - in production, this would come from server
-        return {
-            notesTransformed: Math.floor(Math.random() * 100) + 47,
-            timeSaved: (Math.random() * 20 + 5).toFixed(1),
-            accuracyRate: 80,
-            activeProjects: Math.floor(Math.random() * 20) + 15,
-            processingQueue: Math.floor(Math.random() * 5) + 1
-        };
-    }
 }
 
 // Create global auth manager instance
@@ -237,7 +265,7 @@ window.authManager = new AuthManager();
 // Auto-initialize on DOM load for pages that need auth
 document.addEventListener('DOMContentLoaded', () => {
     // Only auto-init on dashboard and other protected pages
-    if (window.location.pathname.includes('Dashboard.html') || 
+    if (window.location.pathname.includes('dashboard.html') || 
         document.body.dataset.requiresAuth === 'true') {
         window.authManager.init();
     }

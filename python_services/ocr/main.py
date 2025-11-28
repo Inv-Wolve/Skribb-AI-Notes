@@ -1,16 +1,40 @@
 from fastapi import FastAPI, UploadFile, Form
 from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 from PIL import Image
 from paddleocr import PaddleOCR
 import io
 import uvicorn
 import json
+import logging
 
-app = FastAPI()
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
-# Default OCR for English
-ocr_en = PaddleOCR(use_textline_orientation=True, lang='en')
+app = FastAPI(title="Skribb AI OCR Service")
+
+# CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, restrict this
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize OCR engines (lazy loading could be better, but keeping it simple for now)
+try:
+    logger.info("Initializing English OCR engine...")
+    ocr_en = PaddleOCR(use_textline_orientation=True, lang='en', show_log=False)
+    logger.info("English OCR engine initialized.")
+except Exception as e:
+    logger.error(f"Failed to initialize OCR engine: {e}")
+    ocr_en = None
 
 def sanitize_for_json(obj):
     if isinstance(obj, np.ndarray):
@@ -24,22 +48,29 @@ def sanitize_for_json(obj):
     else:
         return str(obj)
 
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "ocr_engine": "ready" if ocr_en else "failed"}
+
 @app.post("/imagetotext")
 async def imagetotext(file: UploadFile, lang: str = Form(None)):
     """
     Return JSON response with extracted text
-    'lang' can be provided; defaults to English if not sent.
     """
     try:
+        if not ocr_en:
+             return JSONResponse({"success": False, "error": "OCR engine not initialized"}, status_code=500)
+
         # Read image
         image_bytes = await file.read()
         img = np.array(Image.open(io.BytesIO(image_bytes)))
 
-        # Choose OCR instance
-        if lang is None or lang.lower() == 'en':
-            ocr = ocr_en
-        else:
-            ocr = PaddleOCR(use_textline_orientation=True, lang=lang)
+        # Choose OCR instance (currently only EN supported efficiently)
+        ocr = ocr_en
+        if lang and lang.lower() != 'en':
+             # Dynamic loading for other languages (might be slow)
+             logger.info(f"Loading OCR for language: {lang}")
+             ocr = PaddleOCR(use_textline_orientation=True, lang=lang, show_log=False)
 
         # Run OCR
         results = ocr.predict(img)
@@ -56,6 +87,7 @@ async def imagetotext(file: UploadFile, lang: str = Form(None)):
         })
 
     except Exception as e:
+        logger.error(f"Error in imagetotext: {e}")
         return JSONResponse({
             "success": False,
             "error": str(e)
@@ -67,14 +99,15 @@ async def imagetotext_stream(file: UploadFile, lang: str = Form(None)):
     Streaming endpoint for Server-Sent Events (SSE)
     """
     try:
+        if not ocr_en:
+             raise Exception("OCR engine not initialized")
+
         image_bytes = await file.read()
         img = np.array(Image.open(io.BytesIO(image_bytes)))
 
-        # Choose OCR instance
-        if lang is None or lang.lower() == 'en':
-            ocr = ocr_en
-        else:
-            ocr = PaddleOCR(use_textline_orientation=True, lang=lang)
+        ocr = ocr_en
+        if lang and lang.lower() != 'en':
+             ocr = PaddleOCR(use_textline_orientation=True, lang=lang, show_log=False)
 
         results = ocr.predict(img)
         lines = results[0]['rec_texts'] if results else []
@@ -88,10 +121,10 @@ async def imagetotext_stream(file: UploadFile, lang: str = Form(None)):
         return StreamingResponse(event_generator(), media_type="text/event-stream")
 
     except Exception as e:
+        logger.error(f"Error in imagetotext_stream: {e}")
         def error_gen():
             yield f"data: {json.dumps({'error': str(e)})}\n\n"
         return StreamingResponse(error_gen(), media_type="text/event-stream")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=1235)
-    print("Server is now running!")
