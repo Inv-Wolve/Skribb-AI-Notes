@@ -13,6 +13,6 @@ module.exports = {
   AI_API_KEY: process.env.AI_API_KEY,
   AI_CODER_API_KEY: process.env.AI_CODER_API_KEY,
   BOT_TOKEN: process.env.BOT_TOKEN,
-  FRONTEND_URL: process.env.FRONTEND_URL || 'https://zykro.dev',
+  FRONTEND_URL: process.env.FRONTEND_URL || 'https://skribb.zykro.dev',
   SESSION_SECRET: process.env.SESSION_SECRET || 'default_secret_key_change_in_prod'
 };

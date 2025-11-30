@@ -177,7 +177,7 @@ npm run watch:css
 
 Once running, open your browser and navigate to:
 ```
-http://localhost:5500
+https://skribb.zykro.dev
 ```
 
 ---

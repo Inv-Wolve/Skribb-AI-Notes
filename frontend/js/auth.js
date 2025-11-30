@@ -1,3 +1,13 @@
+class AuthManager {
+    constructor() {
+        this.baseURL = 'https://skribb.zykro.dev';
+        this.tokenKey = 'skribb_token';
+        this.userKey = 'skribb_user';
+    }
+
+    // Store token
+    setToken(token) {
+        if (token) {
             localStorage.setItem(this.tokenKey, token);
         } else {
             localStorage.removeItem(this.tokenKey);
